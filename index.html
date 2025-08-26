@@ -729,19 +729,46 @@ body.dark-mode .phase-block {
 
 .phase-block.optimization { border-color: var(--c4-otimizacao); }
 .phase-block.optimization .phase-title { color: var(--c4-otimizacao); }
-/* --- CORREÇÃO RESPONSIVA PARA CABEÇALHOS DOS CAPÍTULOS --- */
+/* --- CORREÇÃO RESPONSIVA DEFINITIVA PARA CABEÇALHOS --- */
+
+/* Para tablets e celulares em geral (até 768px de largura) */
 @media (max-width: 768px) {
     .chapter-content-wrapper {
+        width: 100%; /* ESSENCIAL: Força o container a ocupar a largura da tela */
+        max-width: 100%; /* Garante a sobreposição da regra de 900px */
         padding-left: 1.5rem;
         padding-right: 1.5rem;
     }
 
     .chapter-number-large {
-        font-size: clamp(8rem, 25vw, 10rem); /* Reduz um pouco o número no mobile */
+        font-size: clamp(8rem, 25vw, 10rem);
     }
 
     .chapter-text-column {
-        padding-left: 1rem; /* Reduz o espaçamento entre o número e o texto */
+        padding-left: 1rem;
+    }
+}
+
+/* Aprimoramento para celulares BEM estreitos (até 480px de largura) */
+@media (max-width: 480px) {
+    .chapter-content-wrapper {
+        flex-direction: column; /* Coloca o número GIGANTE em cima do texto */
+        justify-content: center;
+        text-align: center;
+    }
+
+    .chapter-text-column {
+        padding-left: 0; /* Remove o espaçamento lateral desnecessário */
+        margin-top: -2rem; /* Sobe o texto para um efeito de sobreposição legal */
+        z-index: 10; /* Garante que o texto fique na frente do número */
+    }
+
+    .chapter-title {
+        font-size: 2.2rem; /* Ajusta o tamanho do título para caber melhor */
+    }
+
+    .chapter-subtitle {
+        max-width: 100%; /* Garante que o subtítulo use todo o espaço */
     }
 }
 </style>
