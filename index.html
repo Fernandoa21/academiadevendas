@@ -748,17 +748,18 @@ body.dark-mode .phase-block {
         padding-left: 1rem;
     }
 }
-
 /* Aprimoramento para celulares BEM estreitos (até 480px de largura) */
 @media (max-width: 480px) {
     .chapter-content-wrapper {
         flex-direction: column; /* Coloca o número GIGANTE em cima do texto */
         justify-content: center;
-        text-align: center;
+        text-align: left; /* ALTERADO para alinhar o texto à esquerda */
+        align-items: flex-start; /* NOVO: Alinha os blocos (número e texto) à esquerda */
     }
 
     .chapter-text-column {
         padding-left: 0; /* Remove o espaçamento lateral desnecessário */
+        text-align: left; /* ALTERADO para alinhar o texto à esquerda */
         margin-top: -2rem; /* Sobe o texto para um efeito de sobreposição legal */
         z-index: 10; /* Garante que o texto fique na frente do número */
     }
