@@ -729,6 +729,21 @@ body.dark-mode .phase-block {
 
 .phase-block.optimization { border-color: var(--c4-otimizacao); }
 .phase-block.optimization .phase-title { color: var(--c4-otimizacao); }
+/* --- CORREÇÃO RESPONSIVA PARA CABEÇALHOS DOS CAPÍTULOS --- */
+@media (max-width: 768px) {
+    .chapter-content-wrapper {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+
+    .chapter-number-large {
+        font-size: clamp(8rem, 25vw, 10rem); /* Reduz um pouco o número no mobile */
+    }
+
+    .chapter-text-column {
+        padding-left: 1rem; /* Reduz o espaçamento entre o número e o texto */
+    }
+}
 </style>
 </head>
 <body>
