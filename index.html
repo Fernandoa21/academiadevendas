@@ -32,7 +32,8 @@
         
         .page {
             min-height: 100vh;
-            padding: 4rem 3rem 8rem 3rem; 
+            /* Aumentado padding inferior para criar mais espaço seguro */
+            padding: 4rem 3rem 10rem 3rem; 
             display: none;
             position: relative;
             width: 100%;
@@ -49,7 +50,7 @@
 
         @media (max-width: 768px) {
             .page {
-                padding: 3rem 1.5rem 8rem 1.5rem;
+                padding: 3rem 1.5rem 10rem 1.5rem;
             }
         }
         
@@ -85,7 +86,8 @@
         
         .author-info {
            position: absolute;
-           bottom: 4rem;
+           /* Aumentado o 'bottom' para ficar acima da área de navegação */
+           bottom: 9rem;
            left: 0;
            right: 0;
            text-align: center;
@@ -98,6 +100,8 @@
             justify-content: center;
             align-items: center;
             border-radius: 0;
+            /* Adicionado fundo padrão para a página 5 e outros cabeçalhos sem cor específica */
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
         }
         
         .chapter-number {
@@ -931,7 +935,7 @@
             const totalPages = pages.length;
             const prevBtn = document.getElementById('prevBtn');
             const nextBtn = document.getElementById('nextBtn');
-            const pageCounter = document.getElementById('page-counter'); // Corrigido para page-counter
+            const pageCounter = document.querySelector('.page-counter');
 
             function showPage(pageIndex) {
                 if (pages[currentPage]) {
@@ -944,21 +948,14 @@
                     pages[currentPage].classList.add('active');
                 }
                 
-                // Atualiza o contador de páginas
-                const counterSpan = document.getElementById('currentPageNum');
-                if (counterSpan) {
-                    counterSpan.textContent = currentPage + 1;
+                if (pageCounter) {
+                   pageCounter.innerHTML = `<span id="currentPageNum">${currentPage + 1}</span> / ${totalPages}`;
                 }
-                
-                const totalSpan = document.querySelector('.page-counter');
-                 if (totalSpan) {
-                    totalSpan.innerHTML = `<span id="currentPageNum">${currentPage + 1}</span> / ${totalPages}`;
-                 }
-
 
                 prevBtn.disabled = currentPage === 0;
                 nextBtn.disabled = currentPage === (totalPages - 1);
                 
+                // ESTA LINHA GARANTE QUE A PÁGINA VOLTE AO TOPO
                 window.scrollTo(0, 0);
             }
 
