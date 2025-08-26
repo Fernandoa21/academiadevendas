@@ -3,400 +3,763 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Psicologia das Vendas Online - Ebook Completo</title>
+    <title>Psicologia das Vendas Online - O Framework Científico</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        html, body {
-            height: 100%;
-            width: 100%;
-            overflow-x: hidden;
-        }
+:root {
+    --bg-color: #ffffff;
+    --bg-secondary-color: #f8f9fa;
+    --text-color: #2c3e50;
+    --text-light-color: #7f8c8d;
+    --primary-color: #3498db;
+    --danger-color: #e74c3c;
+    --shadow-color: rgba(0,0,0,0.1);
+    
+    /* NOVA Paleta de Cores da Capa */
+    --cover-bg: #FFFFFF;      /* Branco Puro */
+    --cover-text: #212529;     /* Texto Escuro Forte */
+    --cover-accent: #3498db;   /* Azul Primário */
+    --cover-accent-light: #eaf4fc; /* Azul Bem Claro */
 
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            line-height: 1.6;
-            color: #2c3e50;
-            background: #fff;
-        }
-        
-        .ebook-container {
-            width: 100%;
-            margin: 0;
-            background: white;
-        }
-        
-        .page {
-            min-height: 100vh;
-            padding: 4rem 3rem 10rem 3rem; 
-            display: none;
-            position: relative;
-            width: 100%;
-        }
-        
-        .page.active {
-            display: block;
-        }
-        
-        .cover.active,
-        .chapter-header.active {
-            display: flex;
-        }
+    /* NOVAS Cores Base dos Capítulos */
+    --c1-psicologia: #00BFFF; /* Ciano Vibrante */
+    --c2-persuasao: #e74c3c;  /* Vermelho Urgência */
+    --c3-interface: #8e44ad;  /* Roxo Criatividade */
+    --c4-otimizacao: #27ae60; /* Verde Crescimento */
+    --c5-sintese: #34495e;    /* Cinza Chumbo Autoridade */
+}
 
-        @media (max-width: 768px) {
-            .page {
-                padding: 3rem 1.5rem 10rem 1.5rem;
-            }
-        }
-        
-        .cover {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            text-align: center;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .cover h1 {
-            font-size: 3.5rem;
-            font-weight: 900;
-            margin-bottom: 1rem;
-            line-height: 1.1;
-            text-transform: uppercase;
-        }
+body.dark-mode {
+    --bg-color: #1a1d24;
+    --bg-secondary-color: #252a33;
+    --text-color: #e0e0e0;
+    --text-light-color: #999999;
+    --primary-color: #5fa8e3;
+    --danger-color: #f18e82;
+    --shadow-color: rgba(0,0,0,0.4);
 
-        @media (max-width: 768px) {
-            .cover h1 { font-size: 2.5rem; }
-            .cover .subtitle { font-size: 1.2rem; }
-        }
-        
-        .cover .subtitle {
-            font-size: 1.5rem;
-            opacity: 0.9;
-            margin-bottom: 3rem;
-            font-weight: 300;
-            max-width: 600px;
-        }
-        
-        .author-info {
-           position: absolute;
-           bottom: 9rem;
-           left: 0;
-           right: 0;
-           text-align: center;
-        }
-        
-        .chapter-header {
-            color: white;
-            text-align: center;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            border-radius: 0;
-            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
-        }
-        
-        .chapter-number {
-            font-size: 8rem;
-            font-weight: 900;
-            opacity: 0.3;
-            line-height: 1;
-        }
-        
-        .chapter-title {
-            font-size: 3rem;
-            font-weight: 900;
-            margin: 1rem 0;
-            text-transform: uppercase;
-        }
+    /* CORREÇÃO: Cores da capa para o modo escuro */
+    --cover-bg: #1a1d24;      /* Fundo escuro */
+    --cover-text: #e0e0e0;     /* Texto claro */
+    --cover-accent: #5fa8e3;   /* Azul primário claro */
+    --cover-accent-light: #252a33; /* Detalhe escuro sutil */
+}
+    
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    html, body {
+        height: 100%;
+        width: 100%;
+        overflow-x: hidden;
+    }
 
-        @media (max-width: 768px) {
-            .chapter-title { font-size: 2.2rem; }
-        }
-        
-        .chapter-subtitle {
-            font-size: 1.3rem;
-            opacity: 0.9;
-            max-width: 600px;
-        }
-        
-        .content-page-wrapper {
-            max-width: 800px;
-            margin: 0 auto;
-            width: 100%;
-        }
+    body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        line-height: 1.6;
+        color: var(--text-color);
+        background: var(--bg-secondary-color);
+        transition: background-color 0.3s ease, color 0.3s ease;
+        overflow: hidden;
+    }
+    
+    .ebook-container {
+        width: 100%;
+        margin: 0;
+        background: var(--bg-color);
+    }
+    
+.page {
+    height: 100vh; /* FORÇA a página a ter a altura exata da tela */
+    /* Espaçamento lateral fluido */
+    padding: 4rem clamp(1.5rem, 5vw, 3rem) 10rem clamp(1.5rem, 5vw, 3rem); 
+    display: none;
+    position: relative;
+    width: 100%;
+    /* Permite rolagem apenas se o CONTEÚDO interno for muito grande */
+    overflow-y: auto; 
+}
+    
+    .page.active {
+        display: block;
+    }
+    
+    .cover.active,
+    .chapter-header.active {
+        display: flex;
+    }
+    
+.cover {
+    background: var(--cover-bg); /* Fundo branco */
+    overflow: hidden;
+    position: relative;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center; /* CORRIGIDO: Alinha todo o texto ao centro */
+}
+/* CORREÇÃO: Força a capa e os cabeçalhos a ocuparem exatamente 100% da tela */
+.cover, .chapter-header {
+    height: 100vh;
+    min-height: 100vh;
+    padding: 0; /* Remove o padding interno para controle total */
+    overflow: hidden;
+}
+    
+    .cover h1 {
+        /* Tipografia Fluida */
+        font-size: clamp(2.5rem, 8vw, 4.5rem);
+        font-weight: 900;
+        margin-bottom: 1rem;
+        line-height: 1.1;
+        text-transform: uppercase;
+        color: var(--memphis-text);
+        text-shadow: -2px -2px 0 var(--memphis-bg), 2px -2px 0 var(--memphis-bg), -2px 2px 0 var(--memphis-bg), 2px 2px 0 var(--memphis-bg);
+        z-index: 10;
+        position: relative;
+    }
+    
+.cover .subtitle {
+    /* Tipografia Fluida */
+    font-size: clamp(1rem, 3vw, 1.5rem);
+    opacity: 0.9;
+    margin-bottom: 3rem;
+    font-weight: 300;
+    max-width: 600px;
+    z-index: 10;
+    position: relative;
+    /* CORREÇÃO: Adicione as duas linhas abaixo */
+    margin-left: auto;
+    margin-right: auto;
+}
+    
+    .cover .author-info {
+        z-index: 10;
+        position: relative;
+        text-align: center;
+        margin-top: 2rem;
+    }
+    
+.chapter-header {
+    padding: 0;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
 
-        .content-page h2 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: #2c3e50;
-            margin-bottom: 2rem;
-            border-bottom: 4px solid #3498db;
-            padding-bottom: 1rem;
-        }
-        
-        .content-page h3 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #e74c3c;
-            margin: 2rem 0 1rem 0;
-        }
-        
-        .content-page p {
-            font-size: 1.1rem;
-            margin-bottom: 1.5rem;
-            line-height: 1.7;
-        }
-        
-        .highlight-box {
-            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
-            color: white;
-            padding: 2rem;
-            border-radius: 15px;
-            margin: 2rem 0;
-            font-weight: 600;
-            text-align: center;
-        }
-        
-        .theory-source {
-            background: #f8f9fa;
-            border-left: 4px solid #e74c3c;
-            padding: 1.5rem;
-            margin: 2rem 0;
-            border-radius: 0 10px 10px 0;
-        }
-        
-        .theory-source .university {
-            font-weight: 700;
-            color: #e74c3c;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-        
-        .stat-item {
-            text-align: center;
-            padding: 1.5rem;
-            background: linear-gradient(135deg, #00cec9 0%, #55a3ff 100%);
-            color: white;
-            border-radius: 15px;
-        }
-        
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 900;
-            display: block;
-        }
-        
-        .page-number {
-            position: absolute;
-            bottom: 2rem;
-            right: 3rem;
-            font-size: 0.9rem;
-            color: #7f8c8d;
-        }
+/* Define a cor de fundo específica para o capítulo 1 */
+#chapter-1-header {
+    background-color: var(--memphis-red);
+}
 
-        @media (max-width: 768px) {
-            .page-number { right: 1.5rem; }
-        }
-        
+.chapter-content-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 900px;
+    z-index: 5;
+}
+
+.chapter-number-column {
+    flex: 0 0 40%;
+    text-align: center;
+}
+
+.chapter-number-large {
+    font-size: clamp(10rem, 30vw, 15rem);
+    font-weight: 900;
+    color: rgba(255, 255, 255, 0.15);
+}
+
+.chapter-text-column {
+    flex: 0 0 60%;
+    text-align: left;
+    padding-left: 2rem;
+}
+
+.chapter-title {
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 900;
+    margin-bottom: 1rem;
+    line-height: 1.1;
+    text-transform: uppercase;
+    color: white;
+}
+
+.chapter-subtitle {
+    font-size: clamp(1rem, 2.5vw, 1.3rem);
+    opacity: 0.9;
+    max-width: 400px;
+    color: white;
+}
+
+/* Formas geométricas decorativas */
+.chapter-shape {
+    position: absolute;
+    z-index: 1;
+}
+.chapter-shape.shape-1 {
+    width: 200px;
+    height: 200px;
+    background-color: var(--memphis-cyan);
+    border-radius: 30px;
+    transform: rotate(45deg);
+    top: -50px;
+    right: -50px;
+    opacity: 0.8;
+}
+.chapter-shape.shape-2 {
+    width: 250px;
+    height: 250px;
+    background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,0.1) 10px, rgba(255,255,255,0.1) 20px);
+    bottom: -100px;
+    left: -100px;
+}
+    
+    .content-page-wrapper {
+        max-width: 800px;
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .content-page h2 {
+        font-size: clamp(1.8rem, 5vw, 2.5rem);
+        font-weight: 800;
+        color: var(--text-color);
+        margin-bottom: 2rem;
+        border-bottom: 4px solid var(--primary-color);
+        padding-bottom: 1rem;
+    }
+    
+    .content-page h3 {
+        font-size: clamp(1.4rem, 4vw, 1.8rem);
+        font-weight: 700;
+        color: var(--danger-color);
+        margin: 2rem 0 1rem 0;
+    }
+    
+    .content-page p {
+        font-size: clamp(1rem, 2.5vw, 1.1rem);
+        margin-bottom: 1.5rem;
+        line-height: 1.7;
+    }
+
+    .meta-comment {
+        font-style: italic;
+        background-color: var(--bg-secondary-color);
+        border-left: 3px solid var(--primary-color);
+        padding: 1rem;
+        margin: 1.5rem 0;
+        border-radius: 0 8px 8px 0;
+        color: var(--text-light-color);
+        font-size: clamp(0.9rem, 2vw, 1rem);
+    }
+    
+    .highlight-box {
+        background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+        color: white;
+        padding: 2rem;
+        border-radius: 15px;
+        margin: 2rem 0;
+        font-weight: 600;
+        text-align: center;
+    }
+    
+    .theory-source {
+        background: var(--bg-secondary-color);
+        border-left: 4px solid var(--danger-color);
+        padding: 1.5rem;
+        margin: 2rem 0;
+        border-radius: 0 10px 10px 0;
+    }
+    
+    .theory-source .university {
+        font-weight: 700;
+        color: var(--danger-color);
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1.5rem;
+        margin: 2rem 0;
+    }
+    
+    .stat-item {
+        text-align: center;
+        padding: 1.5rem;
+        background: linear-gradient(135deg, #00cec9 0%, #55a3ff 100%);
+        color: white;
+        border-radius: 15px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .stat-number {
+        font-size: clamp(1.8rem, 5vw, 2.5rem);
+        font-weight: 900;
+        display: block;
+    }
+    
+    .page-number {
+        position: absolute;
+        bottom: 2rem;
+        right: 3rem;
+        font-size: 0.9rem;
+        color: var(--text-light-color);
+    }
+
+    @media (max-width: 768px) {
+        .page-number { right: 1.5rem; }
+    }
+    
+    .navigation {
+        position: fixed;
+        bottom: 2rem;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(255, 255, 255, 0.35);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        box-shadow: 0 8px 32px 0 var(--shadow-color);
+        padding: 0.8rem 1rem;
+        border-radius: 50px;
+        display: flex;
+        gap: 0.5rem;
+        z-index: 1000;
+        align-items: center;
+        transition: all 0.3s ease;
+    }
+
+    body.dark-mode .navigation {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .nav-btn, .theme-toggle {
+        padding: 0.8rem 1.5rem;
+        background: rgba(255, 255, 255, 0.2);
+        color: var(--text-color);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 25px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    }
+    body.dark-mode .nav-btn, body.dark-mode .theme-toggle {
+        background: rgba(50, 50, 50, 0.4);
+        border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .theme-toggle {
+        padding: 0.8rem;
+        width: 45px;
+        height: 45px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+    }
+    
+    .nav-btn:hover, .theme-toggle:hover {
+        background: rgba(255, 255, 255, 0.5);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px var(--shadow-color);
+    }
+    body.dark-mode .nav-btn:hover, body.dark-mode .theme-toggle:hover {
+        background: rgba(80, 80, 80, 0.5);
+    }
+    
+    .nav-btn:disabled {
+        background: rgba(200, 200, 200, 0.2);
+        color: var(--text-light-color);
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+    }
+    
+    .nav-btn .arrow {
+        display: none;
+    }
+    
+    .page-counter {
+        background: rgba(44, 62, 80, 0.7);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        white-space: nowrap;
+        transition: all 0.3s ease;
+    }
+    body.dark-mode .page-counter {
+         background: rgba(230, 230, 230, 0.7);
+         color: #1a1d24;
+    }
+
+    @media (max-width: 480px) {
         .navigation {
-            position: fixed;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(255, 255, 255, 0.35);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
-            padding: 0.8rem 1rem;
-            border-radius: 50px;
-            display: flex;
-            gap: 1rem;
-            z-index: 1000;
-            align-items: center;
-            transition: all 0.3s ease;
+            padding: 0.6rem;
+            gap: 0.5rem;
+            bottom: 1.5rem;
         }
-        
-        .nav-btn {
-            padding: 0.8rem 1.5rem;
-            background: rgba(255, 255, 255, 0.2);
-            color: #2c3e50;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 25px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
-        }
-        
-        .nav-btn:hover {
-            background: rgba(255, 255, 255, 0.5);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-        
-        .nav-btn:disabled {
-            background: rgba(200, 200, 200, 0.2);
-            color: #7f8c8d;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-        
-        .nav-btn .arrow {
+        .nav-btn .text {
             display: none;
         }
-        
+        .nav-btn .arrow {
+            display: inline;
+        }
+        .nav-btn {
+            padding: 0.7rem 1rem;
+            font-size: 1rem;
+        }
+        .theme-toggle {
+            width: 40px;
+            height: 40px;
+            padding: 0.6rem;
+        }
         .page-counter {
-            background: rgba(44, 62, 80, 0.7);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            white-space: nowrap;
-            transition: all 0.3s ease;
-        }
-
-        @media (max-width: 420px) {
-            .navigation {
-                padding: 0.6rem;
-                gap: 0.5rem;
-                bottom: 1.5rem;
-            }
-            .nav-btn .text {
-                display: none;
-            }
-            .nav-btn .arrow {
-                display: inline;
-            }
-            .nav-btn {
-                padding: 0.7rem 1rem;
-                font-size: 1rem;
-            }
-            .page-counter {
-                padding: 0.6rem 0.9rem;
-                font-size: 0.9rem;
-            }
-        }
-        
-        .chapter-header.green-chapter { background: linear-gradient(135deg, #00b894 0%, #00cec9 100%); }
-        .chapter-header.yellow-chapter { background: linear-gradient(135deg, #fdcb6e 0%, #e17055 100%); }
-        .chapter-header.purple-chapter { background: linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%); }
-        .chapter-header.pink-chapter { background: linear-gradient(135deg, #fd79a8 0%, #e84393 100%); }
-        .chapter-header.blue-chapter { background: linear-gradient(135deg, #00cec9 0%, #55a3ff 100%); }
-
-        .framework-box {
-            background: #fff;
-            color: #2c3e50;
-            padding: 2rem;
-            border-radius: 15px;
-            margin: 2rem 0;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.07);
-            border: 1px solid #eee;
-        }
-        
-        .framework-box h4 {
-            color: #e74c3c;
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
-        }
-        
-        .step-list {
-            counter-reset: step-counter;
-            list-style: none;
-            padding: 0;
-        }
-        
-        .step-list li {
-            counter-increment: step-counter;
-            position: relative;
-            padding-left: 3rem;
-            margin-bottom: 1.5rem;
-            font-size: 1.1rem;
-        }
-        
-        .step-list li::before {
-            content: counter(step-counter);
-            position: absolute;
-            left: 0;
-            top: 0;
-            background: #3498db;
-            color: white;
-            width: 2rem;
-            height: 2rem;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
+            padding: 0.6rem 0.9rem;
             font-size: 0.9rem;
         }
-        
-        .quote-box {
-            background: linear-gradient(135deg, #ff7675 0%, #d63031 100%);
-            color: white;
-            padding: 2rem;
-            border-radius: 15px;
-            margin: 2rem 0;
-            font-style: italic;
-            font-size: 1.2rem;
-            text-align: center;
-            position: relative;
+    }
+    
+    .chapter-header.green-chapter { background: var(--gradient-chapter-2); }
+    .chapter-header.yellow-chapter { background: var(--gradient-chapter-1); }
+    .chapter-header.purple-chapter { background: var(--gradient-chapter-3); }
+    .chapter-header.blue-chapter { background: var(--gradient-chapter-4); }
+    .chapter-header.synthesis-chapter { background: var(--gradient-synthesis); }
+
+    .framework-box {
+        background: var(--bg-color);
+        color: var(--text-color);
+        padding: 2rem;
+        border-radius: 15px;
+        margin: 2rem 0;
+        box-shadow: 0 10px 30px var(--shadow-color);
+        border: 1px solid #eee;
+    }
+    body.dark-mode .framework-box {
+        border-color: #333;
+    }
+    
+    .framework-box h4 {
+        color: var(--danger-color);
+        font-size: clamp(1.1rem, 3vw, 1.3rem);
+        margin-bottom: 1rem;
+    }
+    
+    .step-list {
+        counter-reset: step-counter;
+        list-style: none;
+        padding: 0;
+    }
+    
+    .step-list li {
+        counter-increment: step-counter;
+        position: relative;
+        padding-left: 3rem;
+        margin-bottom: 1.5rem;
+        font-size: clamp(0.95rem, 2.5vw, 1.1rem);
+    }
+    
+    .step-list li::before {
+        content: counter(step-counter);
+        position: absolute;
+        left: 0;
+        top: 0;
+        background: var(--primary-color);
+        color: white;
+        width: 2rem;
+        height: 2rem;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 0.9rem;
+    }
+    
+    .quote-box {
+        background: linear-gradient(135deg, #ff7675 0%, #d63031 100%);
+        color: white;
+        padding: 2rem;
+        border-radius: 15px;
+        margin: 2rem 0;
+        font-style: italic;
+        font-size: clamp(1rem, 3vw, 1.2rem);
+        text-align: center;
+        position: relative;
+    }
+    
+    .quote-box::before {
+        content: '"';
+        font-size: 4rem;
+        position: absolute;
+        top: -1rem;
+        left: 1rem;
+        opacity: 0.5;
+    }
+
+    .hierarchy-demo-large {
+        font-size: clamp(2rem, 6vw, 2.8rem);
+        font-weight: 900;
+        color: var(--danger-color);
+        text-align: center;
+        margin-bottom: 1rem;
+        line-height: 1.1;
+    }
+    .hierarchy-demo-medium {
+        font-size: clamp(1.2rem, 4vw, 1.5rem);
+        font-weight: 300;
+        text-align: center;
+        opacity: 0.8;
+        margin-bottom: 3rem;
+    }
+    .hierarchy-demo-small {
+        font-size: clamp(0.9rem, 2.5vw, 1rem);
+        text-align: center;
+    }
+    
+    @media (max-width: 900px) {
+        .stats-grid {
+            grid-template-columns: repeat(2, 1fr);
         }
-        
-        .quote-box::before {
-            content: '"';
-            font-size: 4rem;
-            position: absolute;
-            top: -1rem;
-            left: 1rem;
-            opacity: 0.5;
+    }
+
+    @media (max-width: 600px) {
+        .stats-grid {
+            grid-template-columns: 1fr;
         }
-        
-        @media print {
-            .navigation { display: none; }
-            .page { page-break-after: always; display: block !important; min-height: auto; }
+    }
+
+    /* NOVOS ESTILOS PARA A PÁGINA DE CORES (PÁGINA 21) */
+    .color-card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin: 2rem 0;
+    }
+    .color-card {
+        background-color: var(--bg-secondary-color);
+        border-radius: 15px;
+        padding: 2rem;
+        box-shadow: 0 4px 15px var(--shadow-color);
+        border-top: 5px solid;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .color-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px var(--shadow-color);
+    }
+    .color-card-header {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+    }
+    .color-swatch {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+        font-size: 1.5rem;
+    }
+    .color-card h4 {
+        font-size: 1.8rem;
+        margin: 0;
+        color: var(--text-color);
+    }
+    .color-card p {
+        font-size: 1rem;
+        line-height: 1.6;
+        margin: 0;
+    }
+    /* Cores específicas para as bordas e círculos */
+    .color-card.blue { border-color: #3498db; }
+    .color-card.blue .color-swatch { background-color: #3498db; }
+    .color-card.red { border-color: #e74c3c; }
+    .color-card.red .color-swatch { background-color: #e74c3c; }
+    .color-card.green { border-color: #27ae60; }
+    .color-card.green .color-swatch { background-color: #27ae60; }
+    .color-card.dark { border-color: #2c3e50; }
+    .color-card.dark .color-swatch { background-color: #2c3e50; }
+    body.dark-mode .color-card.dark { border-color: #e0e0e0; }
+    
+    .cover-shape {
+        position: absolute;
+        z-index: 1;
+        transition: all 0.5s ease-out;
+    }
+/* CORREÇÃO: Torna os seletores específicos para a capa */
+.cover .shape-1 {
+    width: 30%;
+    height: 40%;
+    background-color: var(--memphis-red);
+    top: -5%;
+    left: -5%;
+    border-radius: 0 0 100px 0;
+}
+.cover .shape-2 {
+    width: 40%;
+    height: 25%;
+    background-color: var(--memphis-cyan);
+    bottom: -5%;
+    right: -10%;
+    border-radius: 100px 0 0 0;
+}
+.cover .shape-3 {
+    width: 25%;
+    height: 15%;
+    background-image: repeating-linear-gradient(45deg, var(--memphis-red), var(--memphis-red) 10px, transparent 10px, transparent 20px);
+    bottom: 20%;
+    left: 5%;
+}
+.cover .shape-4 {
+    width: 20%;
+    height: 15%;
+    background-image: repeating-radial-gradient(circle, var(--memphis-cyan), var(--memphis-cyan) 10px, transparent 10px, transparent 20px);
+    background-size: 30px 30px;
+    top: 15%;
+    right: 5%;
+}
+    
+    @media (max-width: 768px) {
+        .cover-shape.shape-3,
+        .cover-shape.shape-4 {
+            display: none;
         }
-    </style>
+        .cover-shape.shape-1 {
+            width: 40%;
+            height: 30%;
+        }
+        .cover-shape.shape-2 {
+            width: 50%;
+            height: 20%;
+        }
+    }
+    
+    @media print {
+        .navigation { display: none; }
+        .page { page-break-after: always; display: block !important; min-height: auto; }
+    }
+    /* CORREÇÃO: Alinha as listas a partir dos marcadores (bolinhas) */
+.framework-box ul {
+    /* Ajusta o recuo para que o marcador fique alinhado à esquerda */
+    padding-left: 20px; 
+}
+/* --- CORES DE FUNDO CORRIGIDAS PARA OS CABEÇALHOS DE CAPÍTULO --- */
+#chapter-1-header {
+    background-color: var(--c1-psicologia);
+}
+#chapter-2-header {
+    background-color: var(--c2-persuasao);
+}
+#chapter-3-header {
+    background-color: var(--c3-interface);
+}
+#chapter-4-header {
+    background-color: var(--c4-otimizacao);
+}
+#synthesis-header {
+    background-color: var(--c5-sintese);
+}
+/* --- ESTILOS PARA O NOVO BOX DE RESUMO DO FRAMEWORK --- */
+.framework-summary-box {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem; /* Espaçamento entre os blocos */
+}
+
+.phase-block {
+    background-color: var(--bg-secondary-color);
+    border-left: 5px solid; /* Borda lateral colorida */
+    border-radius: 8px;
+    padding: 1.5rem 2rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+body.dark-mode .phase-block {
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+
+.phase-block:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px var(--shadow-color);
+}
+
+.phase-title {
+    font-size: clamp(1.2rem, 4vw, 1.5rem);
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.phase-actions {
+    list-style-type: '✓  '; /* Usando um marcador mais elegante */
+    padding-left: 20px;
+    font-size: clamp(0.95rem, 2.5vw, 1rem);
+    line-height: 1.8;
+}
+
+/* Aplicando as cores de cada capítulo */
+.phase-block.psychology { border-color: var(--c1-psicologia); }
+.phase-block.psychology .phase-title { color: var(--c1-psicologia); }
+
+.phase-block.persuasion { border-color: var(--c2-persuasao); }
+.phase-block.persuasion .phase-title { color: var(--c2-persuasao); }
+
+.phase-block.interface { border-color: var(--c3-interface); }
+.phase-block.interface .phase-title { color: var(--c3-interface); }
+
+.phase-block.optimization { border-color: var(--c4-otimizacao); }
+.phase-block.optimization .phase-title { color: var(--c4-otimizacao); }
+</style>
 </head>
 <body>
     <div class="ebook-container">
-        
-        <div class="page cover active">
-            <h1>Psicologia das<br>Vendas Online</h1>
-            <p class="subtitle">Como as Maiores Universidades do Mundo Explicam o Comportamento do Consumidor Digital</p>
-            <div class="author-info">
-                <p style="font-size: 1.2rem; font-weight: 600;">Baseado em Pesquisas de Harvard, Wharton, Stanford & MIT</p>
-                <p style="font-size: 1rem; opacity: 0.8;">Academia da Conversão • 2025</p>
-            </div>
-        </div>
+    <div class="page cover active">
+    <div class="cover-shape shape-1" style="background-color: var(--cover-accent);"></div>
+    <div class="cover-shape shape-2" style="background-color: var(--cover-accent-light);"></div>
+    <div class="cover-shape shape-3" style="background-image: repeating-linear-gradient(45deg, var(--cover-accent), var(--cover-accent) 10px, transparent 10px, transparent 20px); opacity: 0.5;"></div>
+    <div class="cover-shape shape-4" style="background-image: none; border: 10px solid var(--cover-accent-light); border-radius: 50%;"></div>
 
-        <div class="page content-page">
-            <div class="content-page-wrapper">
-                <h2>Índice</h2>
-                <div style="text-align: left; font-size: 1.2rem; line-height: 2.5;">
-                    <p><strong>Capítulo 1:</strong> A Ciência da Persuasão Digital.............................5</p>
-                    <p><strong>Capítulo 2:</strong> Economia Comportamental Aplicada......................9</p>
-                    <p><strong>Capítulo 3:</strong> Psicologia da Decisão de Compra.........................13</p>
-                    <p><strong>Capítulo 4:</strong> Neurociência do Marketing................................17</p>
-                    <p><strong>Capítulo 5:</strong> Design Persuasivo e UX....................................21</p>
-                    <p><strong>Capítulo 6:</strong> Framework de Conversão...................................25</p>
-                    <p><strong>Conclusão:</strong> Implementação Prática...................................29</p>
+    <div class="content-page-wrapper" style="max-width: 700px;"> <h1 style="color: var(--cover-text); text-shadow: none;">Psicologia das Vendas Online</h1>
+        <p class="subtitle" style="color: var(--primary-color);">O Framework Científico para Criar Ofertas Irresistíveis</p>
+        
+        <div class="author-info" style="color: var(--cover-text); margin-top: 3rem;">
+            <p style="font-size: 1rem; font-weight: 400; opacity: 0.8;">Baseado em pesquisas de Harvard, Wharton, Stanford e MIT</p>
+            <p style="font-size: 1.2rem; font-weight: 600; margin-top: 1.5rem;">Academia da Conversão</p>
+            <p style="font-size: 0.9rem; opacity: 0.6;">2025</p>
+        </div>
+    </div>
+</div>
+
+<div class="page content-page">
+    <div class="content-page-wrapper">
+        <h2>Índice (Reestruturado)</h2>
+                <div style="text-align: left; font-size: 1.1rem; line-height: 2.4;">
+                    <p><strong>Introdução:</strong> O Cenário das Vendas Online........................ 3</p>
+                    <p><strong>Parte 1: A Base - Psicologia (Wharton)</strong> 🧠........................ 5</p>
+                    <p><strong>Parte 2: O Argumento - Persuasão (Stanford)</strong> 🧲................. 11</p>
+                    <p><strong>Parte 3: A Experiência - Interface (MIT)</strong> 🖥️........................ 18</p>
+                    <p><strong>Parte 4: A Evolução - Otimização (Harvard)</strong> 📈.................... 24</p>
+                    <p><strong>Síntese:</strong> O Framework Definitivo em Ação...................... 30</p>
+                    <p><strong>Conclusão:</strong> Seu Plano de Implementação......................... 34</p>
                 </div>
             </div>
             <div class="page-number">2</div>
@@ -404,210 +767,213 @@
 
         <div class="page content-page">
             <div class="content-page-wrapper">
-                <h2>Por Que Este Ebook Existe?</h2>
-                <p>Em 2024, as vendas online movimentaram mais de <strong>$6 trilhões globalmente</strong>. Mas aqui está o problema: <strong>apenas 2-3% dos visitantes de e-commerce realmente compram</strong>.</p>
-                <p>Durante anos, estudei as pesquisas das maiores universidades do mundo para entender <em>por que</em> algumas pessoas compram e outras não. Este ebook é o resultado dessa jornada.</p>
+                <h2>Introdução: Por Que a Psicologia Vende?</h2>
+                <p>Em 2025, as vendas online são um oceano de competição. Milhares de lojas vendem produtos similares, com preços parecidos. Então, por que um cliente escolhe comprar de você e não do seu concorrente? A resposta raramente está no produto. <strong>Está na psicologia.</strong></p>
+                <p>Este ebook não é mais um guia de "dicas de vendas". Ele é um mapa. Um mapa da mente do consumidor digital, baseado em décadas de pesquisa das mais prestigiadas universidades do mundo.</p>
                 <div class="highlight-box">
-                    <p style="font-size: 1.3rem;">Este não é mais um guia de vendas. É a aplicação prática da ciência comportamental às vendas digitais.</p>
+                    <p style="font-size: 1.3rem;">Vamos reestruturar sua forma de vender, aplicando o mesmo framework de 4 fases que gigantes da tecnologia usam para criar experiências de compra irresistíveis.</p>
                 </div>
-                <p>Você vai descobrir como <strong>Harvard</strong> explica a tomada de decisão, o que <strong>Wharton</strong> ensina sobre psicologia do consumidor, e como <strong>Stanford</strong> aborda a persuasão digital.</p>
-                <p>Prepare-se para uma mudança de paradigma na forma como você vende online.</p>
+                <p>Prepare-se para ir além do "o quê" e entender o "porquê".</p>
             </div>
             <div class="page-number">3</div>
         </div>
 
         <div class="page content-page">
-            <div class="content-page-wrapper">
-                <h2>O Cenário Atual das Vendas Online</h2>
+            <div class="content-page-wrapper centered-section">
+                <h2>O Cenário Atual: Números que Assustam</h2>
                 <div class="stats-grid">
-                    <div class="stat-item"><span class="stat-number">97%</span><p>dos visitantes abandonam sem comprar</p></div>
-                    <div class="stat-item"><span class="stat-number">7 seg</span><p>para capturar atenção</p></div>
-                    <div class="stat-item"><span class="stat-number">70%</span><p>abandonam carrinho</p></div>
-                    <div class="stat-item"><span class="stat-number">8x</span><p>mais caro adquirir que reter</p></div>
+                    <div class="stat-item"><span class="stat-number">97%</span><p>dos visitantes abandonam seu site sem comprar</p></div>
+                    <div class="stat-item"><span class="stat-number">7 seg</span><p>é o tempo que você tem para capturar a atenção</p></div>
+                    <div class="stat-item"><span class="stat-number">70%</span><p>dos carrinhos de compra são abandonados</p></div>
+                    <div class="stat-item"><span class="stat-number">8x</span><p>é quanto custa a mais adquirir um novo cliente do que reter um antigo</p></div>
                 </div>
-                <p>O comportamento do consumidor online é fundamentalmente diferente do offline. <strong>A psicologia muda quando mediada por telas</strong>.</p>
-                <div class="theory-source">
-                    <div class="university">Stanford University - Consumer Behavior</div>
-                    <p>"Contemporary approaches to marketing emphasize the importance of adopting a consumer focus, from determining consumers' wants and needs, understanding their motivation, to shaping their attitudes and ensuring their loyalty."</p>
-                </div>
+                <p>Estes não são apenas números. São sintomas de uma desconexão fundamental entre como as empresas vendem e como os cérebros humanos realmente tomam decisões. As próximas 4 partes deste ebook são o tratamento para essa desconexão.</p>
             </div>
             <div class="page-number">4</div>
         </div>
 
-        <div class="page chapter-header">
-            <div class="chapter-number">01</div>
-            <h1 class="chapter-title">A Ciência da<br>Persuasão Digital</h1>
-            <p class="chapter-subtitle">Como Harvard e MIT Explicam o Comportamento Online</p>
+<div class="page chapter-header" id="chapter-1-header">
+    <div class="chapter-shape shape-1" style="background-color: rgba(255, 255, 255, 0.2);"></div>
+    <div class="chapter-shape shape-2" style="background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,0.1) 10px, rgba(255,255,255,0.1) 20px);"></div>
+    
+    <div class="chapter-content-wrapper">
+        <div class="chapter-number-column">
+            <span class="chapter-number-large">01</span>
         </div>
+        <div class="chapter-text-column">
+            <h1 class="chapter-title">A Base<br>Psicologia 🧠</h1>
+            <p class="chapter-subtitle">Entendendo o Sistema Operacional do seu Cliente (Wharton)</p>
+        </div>
+    </div>
+</div>
 
         <div class="page content-page">
             <div class="content-page-wrapper">
-                <h2>O Modelo de Cialdini Aplicado ao Digital</h2>
-                <p>Robert Cialdini, professor da Stanford University, identificou 6 princípios universais de persuasão. No ambiente digital, eles ganham novas dimensões:</p>
-                <h3>1. Reciprocidade Digital</h3>
-                <p>No online, a reciprocidade funciona através de <strong>conteúdo gratuito de valor</strong>. Ebooks, webinars, ferramentas - tudo que gera a sensação de "dívida psicológica".</p>
-                <h3>2. Compromisso e Coerência</h3>
-                <p>Formulários de múltiplas etapas aumentam conversão porque criam <strong>micro-compromissos</strong>. Cada campo preenchido é um investimento psicológico.</p>
-                <div class="theory-source">
-                    <div class="university">Harvard Business School - Digital Marketing Strategy</div>
-                    <p>A HBS ensina que "Navigate the rise of emerging technologies and their implications for business" requer entender como a psicologia humana interage com interfaces digitais.</p>
+                <h2>Os Dois Sistemas: Venda para o Piloto Automático</h2>
+                <p>Daniel Kahneman (Nobel de Economia) provou que nossa mente opera com dois sistemas. Entender isso é o primeiro passo para vender qualquer coisa online.</p>
+                <div class="framework-box">
+                    <h4>Sistema 1 - O Piloto Automático</h4>
+                    <p>É rápido, intuitivo e emocional. Ele opera por impulso e atalhos mentais. <strong>95% das decisões de compra online são dominadas por ele.</strong> É para ele que sua headline, suas imagens e suas cores devem falar.</p>
                 </div>
-                <h3>3. Prova Social Algorítmica</h3>
-                <p>Reviews, números de vendas, "outras pessoas também compraram" - o cérebro procura atalhos de decisão baseados no comportamento coletivo.</p>
+                <div class="framework-box">
+                    <h4>Sistema 2 - O Analista</h4>
+                    <p>É lento, lógico e deliberativo. Ele adora dados, comparações e planilhas. Ele só entra em ação para justificar a decisão emocional que o Sistema 1 já tomou. É para ele que suas especificações técnicas e seu ROI servem.</p>
+                </div>
+                <div class="highlight-box">
+                    <p>Sua missão: Seduzir o Sistema 1 e, em seguida, fornecer ao Sistema 2 a munição racional para ele se sentir inteligente pela compra.</p>
+                </div>
             </div>
             <div class="page-number">6</div>
         </div>
 
         <div class="page content-page">
             <div class="content-page-wrapper">
-                <h3>4. Autoridade Digital</h3>
-                <p>Online, autoridade é construída através de <strong>conteúdo consistente</strong>, certificações visíveis, press releases e associações com marcas conhecidas.</p>
-                <h3>5. Afinidade/Simpatia</h3>
-                <p>Storytelling pessoal, about pages humanizadas, e conteúdo que mostre valores compartilhados criam conexão emocional à distância.</p>
-                <h3>6. Escassez Programada</h3>
-                <p>Contadores regressivos, "últimas unidades", ofertas por tempo limitado - mas cuidado: <strong>escassez falsa quebra confiança</strong>.</p>
-                <div class="quote-box">
-                    "A persuasão digital não é sobre manipular, é sobre comunicar valor de forma que o cérebro humano processa naturalmente"
-                </div>
+                <h2>Criando sua Persona Psicológica</h2>
+                <p>Esqueça dados demográficos vagos. Para vender, você precisa entender os <strong>vieses cognitivos</strong> do seu cliente. Vamos criar uma persona para um curso de produtividade:</p>
                 <div class="framework-box">
-                    <h4>Framework CIALDINI DIGITAL:</h4>
-                    <ol class="step-list">
-                        <li><strong>Reciprocidade:</strong> Ofereça valor antes de pedir algo</li>
-                        <li><strong>Compromisso:</strong> Crie micro-interações que geram investimento</li>
-                        <li><strong>Prova Social:</strong> Mostre que outros já escolheram você</li>
-                        <li><strong>Autoridade:</strong> Demonstre expertise de forma sutil</li>
-                        <li><strong>Afinidade:</strong> Conecte-se emocionalmente</li>
-                        <li><strong>Escassez:</strong> Crie urgência real</li>
-                    </ol>
+                    <h4>Persona: "Carlos, o Procrastinador Ambicioso"</h4>
+                    <p><strong>Dores Emocionais:</strong> Ansiedade por não cumprir prazos, frustração por ver os outros progredindo, medo de "ficar para trás" na carreira.</p>
+                    <p><strong>Vieses Cognitivos Principais:</strong></p>
+                    <ul>
+                        <li><strong>Viés do Presente:</strong> Ele valoriza a gratificação instantânea (assistir Netflix) mais do que recompensas futuras (terminar um projeto).</li>
+                        <li><strong>Aversão à Perda:</strong> O medo de <strong>perder</strong> uma oportunidade de promoção é 2x mais forte que o desejo de <strong>ganhar</strong> uma.</li>
+                        <li><strong>Efeito Ancoragem:</strong> O primeiro preço que ele vê definirá sua percepção de "caro" ou "barato".</li>
+                    </ul>
                 </div>
+                <p>Agora, toda a sua comunicação será direcionada para ativar e resolver esses padrões mentais.</p>
             </div>
             <div class="page-number">7</div>
         </div>
 
         <div class="page content-page">
             <div class="content-page-wrapper">
-                <h2>A Revolução da Neurociência</h2>
-                <p>MIT e Harvard estão na vanguarda do <strong>neuromarketing</strong> - o estudo de como o cérebro responde a estímulos de marketing.</p>
-                <div class="stats-grid">
-                    <div class="stat-item"><span class="stat-number">95%</span><p>das decisões são subconscientes</p></div>
-                    <div class="stat-item"><span class="stat-number">0.05s</span><p>para formar primeira impressão</p></div>
+                <h2>Aversão à Perda: A Força Mais Poderosa</h2>
+                <p>Estudos da Wharton demonstram que a dor de perder é duas vezes mais poderosa que o prazer de ganhar. Sua comunicação de marketing deve refletir isso.</p>
+                <h3>Como aplicar:</h3>
+                <div class="framework-box">
+                    <h4>Copywriting Baseado em Aversão à Perda:</h4>
+                    <p><strong>❌ Versão Fraca (Foco no Ganho):</strong> "Compre nosso curso e ganhe mais produtividade."</p>
+                    <p><strong>✅ Versão Forte (Foco em Evitar a Perda):</strong> "Pare de perder oportunidades e deixar dinheiro na mesa por falta de foco. Nosso curso te impede de perder o controle da sua carreira."</p>
                 </div>
-                <p>O cérebro humano não mudou em milhares de anos, mas o ambiente de compra mudou completamente nos últimos 20. Entender essa tensão é a chave para vendas eficazes.</p>
-                <div class="highlight-box">
-                    <p>Próximo: Como Wharton explica por que escolhemos mal online</p>
-                </div>
+                <p>Outros exemplos: "Últimas vagas", "A oferta termina em 24h", "Não fique de fora". Todos exploram o medo de perder algo que poderia ser seu.</p>
             </div>
             <div class="page-number">8</div>
         </div>
 
-        <div class="page chapter-header green-chapter">
-            <div class="chapter-number">02</div>
-            <h1 class="chapter-title">Economia<br>Comportamental</h1>
-            <p class="chapter-subtitle">As Descobertas de Wharton sobre Decisões Irracionais</p>
+        <div class="page content-page">
+            <div class="content-page-wrapper">
+                <h2>O Paradoxo da Escolha: Menos é Mais</h2>
+                <p>O psicólogo Barry Schwartz provou que muitas opções não libertam, elas paralisam. Em um famoso experimento, uma barraca com 6 tipos de geleia vendeu 10 vezes mais do que uma barraca com 24 tipos.</p>
+                <h3>Como aplicar:</h3>
+                <div class="framework-box">
+                    <h4>Simplifique sua Oferta</h4>
+                    <p>Em vez de 10 planos de assinatura, ofereça 3:</p>
+                    <ul>
+                        <li><strong>Básico:</strong> A opção de menor risco.</li>
+                        <li><strong>Popular (Recomendado):</strong> A opção que você realmente quer que comprem (muitas vezes destacada visualmente).</li>
+                        <li><strong>Premium:</strong> A opção cara que faz a "Popular" parecer um ótimo negócio (Efeito Ancoragem).</li>
+                    </ul>
+                </div>
+                <div class="quote-box">
+                    "A paralisia da decisão é o assassino silencioso da conversão. Guie seu cliente, não o confunda."
+                </div>
+            </div>
+            <div class="page-number">9</div>
         </div>
 
         <div class="page content-page">
             <div class="content-page-wrapper">
-                <h2>O Poder do Anchoring</h2>
-                <p>Daniel Kahneman (Nobel de Economia) provou que <strong>a primeira informação que vemos "ancora" todas as decisões seguintes</strong>.</p>
-                <div class="theory-source">
-                    <div class="university">Wharton School - Consumer Psychology</div>
-                    <p>"Only with knowledge of consumer psychology can you properly connect a corporate strategy with consumers"</p>
-                </div>
-                <h3>Aplicação Prática:</h3>
+                <h2>Mapeando a Jornada Emocional</h2>
+                <p>A compra não é um evento, é um processo emocional. Mapeie os estados que você precisa induzir no seu cliente.</p>
                 <div class="framework-box">
-                    <h4>Estratégia de Preços por Anchoring:</h4>
+                    <h4>Jornada Emocional para o Curso de Produtividade</h4>
                     <ol class="step-list">
-                        <li><strong>Produto Premium primeiro:</strong> Mostre o mais caro antes</li>
-                        <li><strong>Preço "original":</strong> Sempre tenha um preço riscado</li>
-                        <li><strong>Comparação visual:</strong> Use tabelas que destacam o "mais popular"</li>
-                        <li><strong>Contexto de valor:</strong> "Equivale a 2 cafés por dia"</li>
+                        <li><strong>Problema (Frustração):</strong> O cliente chega se sentindo sobrecarregado. Sua página deve validar esse sentimento: "Sentindo que tem 200 tarefas e só 24 horas?".</li>
+                        <li><strong>Solução (Esperança):</strong> Apresente seu método como uma luz no fim do túnel. "Existe uma forma testada de retomar o controle."</li>
+                        <li><strong>Prova (Confiança):</strong> Use depoimentos e dados para transformar esperança em confiança. "Veja como a Maria dobrou sua produtividade em 3 semanas."</li>
+                        <li><strong>Compra (Alívio):</strong> O ato da compra deve ser apresentado como o passo final para o alívio da dor inicial. O checkout deve ser rápido e sem atritos.</li>
                     </ol>
-                </div>
-                <div class="highlight-box">
-                    <p style="font-size: 1.4rem;">Exemplo: Se você quer vender um curso de R$ 497, apresente primeiro uma mentoria de R$ 2.997. O curso parecerá "barato".</p>
                 </div>
             </div>
             <div class="page-number">10</div>
         </div>
 
-        <div class="page content-page">
-            <div class="content-page-wrapper">
-                <h2>O Paradoxo da Escolha</h2>
-                <p>Barry Schwartz (professor visitante em Wharton) descobriu algo contraintuitivo: <strong>mais opções reduzem vendas</strong>.</p>
-                <div class="theory-source">
-                    <div class="university">Wharton - Behavioral Economics</div>
-                    <p>"Whenever our brain is faced with a complex decision, it either tries to take a shortcut or to avoid the decision entirely"</p>
-                </div>
-                <h3>O Experimento das Geleias</h3>
-                <p>Supermercado com 24 tipos de geleia: 60% pararam para ver, apenas 3% compraram.<br>
-                Mesa com 6 tipos: 40% pararam, mas <strong>30% compraram</strong>.</p>
-                <div class="framework-box">
-                    <h4>Regra 3-5-7 para E-commerce:</h4>
-                    <ul style="list-style: none; padding: 0;">
-                        <li>🎯 <strong>3 opções máximo</strong> na página principal</li>
-                        <li>🎯 <strong>5 categorias máximo</strong> no menu</li>
-                        <li>🎯 <strong>7 itens máximo</strong> por categoria</li>
-                    </ul>
-                </div>
-                <div class="quote-box">
-                    "A paralisia da decisão é o assassino silencioso das vendas online"
-                </div>
-            </div>
-            <div class="page-number">11</div>
+<div class="page chapter-header" id="chapter-2-header">
+    <div class="chapter-shape shape-1" style="background-color: rgba(255, 255, 255, 0.2);"></div>
+    <div class="chapter-shape shape-2" style="background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,0.1) 10px, rgba(255,255,255,0.1) 20px);"></div>
+    <div class="chapter-content-wrapper">
+        <div class="chapter-number-column">
+            <span class="chapter-number-large">02</span>
         </div>
+        <div class="chapter-text-column">
+            <h1 class="chapter-title">O Argumento<br>Persuasão 🧲</h1>
+            <p class="chapter-subtitle">Construindo uma Oferta Irresistível (Stanford)</p>
+        </div>
+    </div>
+</div>
 
         <div class="page content-page">
             <div class="content-page-wrapper">
-                <h2>Loss Aversion: O Medo de Perder</h2>
-                <p>Kahneman e Tversky (Teoria dos Prospectos - Nobel 2002) provaram: <strong>sentimos 2x mais dor ao perder do que prazer ao ganhar</strong>.</p>
-                <h3>Aplicações que Funcionam:</h3>
-                <div class="stats-grid">
-                    <div class="stat-item"><span class="stat-number">2x</span><p>Mais impacto da perda vs ganho</p></div>
-                    <div class="stat-item"><span class="stat-number">40%</span><p>Aumento em conversão com "últimas unidades"</p></div>
+                <h2>Os 6 Pilares da Influência de Cialdini</h2>
+                <p>Com a base psicológica entendida, agora construímos o argumento de vendas usando os 6 gatilhos universais de persuasão identificados por Robert Cialdini. Eles são os blocos de construção da sua página de vendas.</p>
+                 <div class="theory-source">
+                    <div class="university">Stanford University - Persuasive Technology Lab</div>
+                    <p>Os princípios de Cialdini são a base do laboratório de tecnologia persuasiva de Stanford, que estuda como a tecnologia pode influenciar o comportamento humano.</p>
                 </div>
-                <div class="framework-box">
-                    <h4>Copywriting Baseado em Loss Aversion:</h4>
-                    <p><strong>❌ Fraco:</strong> "Ganhe 50% de desconto!"</p>
-                    <p><strong>✅ Forte:</strong> "Não perca 50% de desconto (termina em 24h)"</p>
-                    <br>
-                    <p><strong>❌ Fraco:</strong> "Nosso curso te ensina marketing"</p>
-                    <p><strong>✅ Forte:</strong> "Pare de perder clientes por não saber marketing"</p>
-                </div>
+                <p class="meta-comment">Aliás, percebe como citar as universidades (Harvard, Stanford...) é uma aplicação do gatilho da <strong>Autoridade</strong> que veremos a seguir? Nós praticamos o que pregamos.</p>
             </div>
             <div class="page-number">12</div>
         </div>
-
-        <div class="page chapter-header yellow-chapter">
-            <div class="chapter-number">03</div>
-            <h1 class="chapter-title">Psicologia da<br>Decisão de Compra</h1>
-            <p class="chapter-subtitle">Sistema 1 vs Sistema 2: Como o Cérebro Realmente Compra</p>
-        </div>
-
+        
         <div class="page content-page">
             <div class="content-page-wrapper">
-                <h2>Os Dois Sistemas de Decisão</h2>
-                <p>Daniel Kahneman (Princeton/Harvard) revolucionou nossa compreensão da mente humana com a Teoria dos Dois Sistemas:</p>
-                <div class="framework-box">
-                    <h4>Sistema 1 - O Piloto Automático</h4>
-                    <ul style="list-style: none; padding: 0; line-height: 2;">
-                        <li>⚡ <strong>Rápido e intuitivo</strong></li>
-                        <li>💭 <strong>Subconsciente</strong></li>
-                        <li>😊 <strong>Baseado em emoções</strong></li>
-                        <li>🎯 <strong>95% das decisões online</strong></li>
+                <h3>1. Reciprocidade</h3>
+                <p><strong>Princípio:</strong> As pessoas sentem a necessidade de retribuir um favor. <br><strong>Aplicação:</strong> Dê algo de valor Genuíno ANTES de pedir a venda.</p>
+                 <div class="framework-box">
+                    <h4>Exemplos Práticos:</h4>
+                    <ul>
+                        <li>Um ebook gratuito com "As 5 técnicas para vencer a procrastinação".</li>
+                        <li>Uma planilha "Calculadora de Produtividade".</li>
+                        <li>Um mini-curso de 3 dias por e-mail.</li>
+                    </ul>
+                    <p><strong>Erro Comum:</strong> Oferecer algo de baixo valor (uma "newsletter genérica") e esperar uma grande retribuição (uma compra de R$500).</p>
+                </div>
+
+                <h3>2. Compromisso e Coerência</h3>
+                <p><strong>Princípio:</strong> As pessoas gostam de ser consistentes com o que já disseram ou fizeram.<br><strong>Aplicação:</strong> Peça pequenos "sins" antes de pedir o "grande sim" (a compra).</p>
+                 <div class="framework-box">
+                    <h4>Exemplos Práticos:</h4>
+                    <ul>
+                        <li><strong>Quiz:</strong> "Qual seu perfil de procrastinador?". Ao responder, o usuário já se comprometeu com o processo.</li>
+                        <li><strong>Formulário Multi-etapas:</strong> Pedir primeiro o email (baixo compromisso) e só depois o telefone e outros dados.</li>
                     </ul>
                 </div>
-                <div class="framework-box">
-                    <h4>Sistema 2 - O Analista</h4>
-                    <ul style="list-style: none; padding: 0; line-height: 2;">
-                        <li>🐌 <strong>Lento e analítico</strong></li>
-                        <li>🧠 <strong>Consciente</strong></li>
-                        <li>📊 <strong>Baseado em lógica</strong></li>
-                        <li>🎯 <strong>5% das decisões online</strong></li>
+            </div>
+            <div class="page-number">13</div>
+        </div>
+        
+        <div class="page content-page">
+            <div class="content-page-wrapper">
+                 <h3>3. Prova Social</h3>
+                <p><strong>Princípio:</strong> Na dúvida, as pessoas olham para o que os outros estão fazendo.<br><strong>Aplicação:</strong> Mostre que pessoas como o seu cliente já compraram e aprovaram.</p>
+                 <div class="framework-box">
+                    <h4>Tipos de Prova Social (e onde usar):</h4>
+                    <ul>
+                        <li><strong>Depoimentos com Foto e Nome:</strong> Coloque-os perto do botão de compra para quebrar objeções finais.</li>
+                        <li><strong>Logos de Empresas:</strong> Use no topo da página para gerar autoridade instantânea.</li>
+                        <li><strong>Números:</strong> "Mais de 5.837 alunos satisfeitos." Use em headlines e sub-headlines.</li>
+                        <li><strong>Estudos de Caso:</strong> Crie uma seção dedicada para os clientes mais analíticos (Sistema 2).</li>
                     </ul>
                 </div>
-                <div class="highlight-box">
-                    <p style="font-size: 1.3rem;">Insight Crucial: Você precisa vender para o Sistema 1 (emoção) e justificar para o Sistema 2 (razão).</p>
+                 <h3>4. Autoridade</h3>
+                <p><strong>Princípio:</strong> As pessoas tendem a obedecer a figuras de autoridade.<br><strong>Aplicação:</strong> Mostre por que você é qualificado para vender essa solução.</p>
+                 <div class="framework-box">
+                    <h4>Como Construir Autoridade Digital:</h4>
+                    <ul>
+                        <li>Selo "Como visto em:" com logos de portais de notícias.</li>
+                        <li>Certificações e prêmios.</li>
+                        <li>Conteúdo de alta qualidade e consistente em um blog ou canal do YouTube.</li>
+                    </ul>
                 </div>
             </div>
             <div class="page-number">14</div>
@@ -615,248 +981,235 @@
 
         <div class="page content-page">
             <div class="content-page-wrapper">
-                <h2>Heurísticas: Os Atalhos Mentais</h2>
-                <p>O cérebro usa "atalhos" para decidir rapidamente. <strong>Conhecer essas heurísticas é dominar vendas online</strong>.</p>
-                <h3>Heurística da Disponibilidade</h3>
-                <p>Julgamos probabilidade pelo que vem facilmente à mente. Por isso <strong>cases de sucesso recentes</strong> vendem mais que estatísticas antigas.</p>
-                <h3>Heurística da Representatividade</h3>
-                <p>Categorizar por padrões visuais. Uma landing page "profissional" sugere produto confiável, mesmo sem conhecer o conteúdo.</p>
-                <div class="theory-source">
-                    <div class="university">MIT Sloan - Consumer Behavior</div>
-                    <p>Pesquisas do MIT mostram que <strong>design de interface influencia percepção de valor em até 400%</strong>.</p>
+                <h3>5. Afinidade (Afeição)</h3>
+                <p><strong>Princípio:</strong> Nós preferimos dizer "sim" para pessoas de quem gostamos.<br><strong>Aplicação:</strong> Humanize sua marca. Pessoas compram de pessoas.</p>
+                 <div class="framework-box">
+                    <h4>Técnicas de Afinidade:</h4>
+                    <ul>
+                        <li><strong>Página "Sobre Nós":</strong> Conte sua história, suas lutas e por que você criou o produto. Crie uma conexão emocional.</li>
+                        <li><strong>Valores Compartilhados:</strong> Deixe claro o que sua marca defende. Ex: "Acreditamos que todos merecem uma carreira próspera e sem estresse."</li>
+                        <li><strong>Design e Linguagem:</strong> Use uma linguagem e um visual que conversem diretamente com sua persona.</li>
+                    </ul>
                 </div>
-                <div class="framework-box">
-                    <h4>Checklist de Heurísticas para E-commerce:</h4>
-                    <ol class="step-list">
-                        <li>Cases de sucesso <strong>recentes</strong> e específicos</li>
-                        <li>Design profissional que "parece caro"</li>
-                        <li>Números específicos (não "muitos clientes" mas "2.847 clientes")</li>
-                        <li>Fotos reais (não stock photos genéricas)</li>
-                        <li>Depoimentos com nome, foto e cargo</li>
-                    </ol>
+                 <h3>6. Escassez</h3>
+                <p><strong>Princípio:</strong> Quanto menos disponível algo é, mais valioso parece.<br><strong>Aplicação:</strong> Crie uma urgência real e ética para a decisão.</p>
+                 <div class="framework-box">
+                    <h4>Tipos de Escassez:</h4>
+                    <ul>
+                        <li><strong>Por Tempo:</strong> "A oferta termina em 03:15:22" (use um contador regressivo).</li>
+                        <li><strong>Por Quantidade:</strong> "Apenas 10 vagas restantes nesta turma."</li>
+                        <li><strong>Por Bônus:</strong> "Os 50 primeiros a se inscreverem ganham uma mentoria exclusiva."</li>
+                    </ul>
+                     <p><strong>CUIDADO:</strong> A escassez falsa (um contador que reseta toda vez que a página é atualizada) destrói a confiança instantaneamente.</p>
                 </div>
             </div>
             <div class="page-number">15</div>
         </div>
 
-        <div class="page chapter-header purple-chapter">
-            <div class="chapter-number">04</div>
-            <h1 class="chapter-title">Neurociência<br>do Marketing</h1>
-            <p class="chapter-subtitle">O que Acontece no Cérebro Durante uma Compra Online</p>
+        <div class="page content-page">
+            <div class="content-page-wrapper">
+                <h2>Ancoragem de Preço: A Arte do Contraste</h2>
+                <p>A primeira informação que seu cliente vê ancora a percepção dele. Isso é especialmente poderoso para preços.</p>
+                <h3>Como aplicar:</h3>
+                <div class="framework-box">
+                    <h4>Exemplo de Ancoragem para um Curso de R$497</h4>
+                    <ol class="step-list">
+                        <li><strong>Ancore Alto:</strong> Comece mencionando o valor total dos bônus ou o preço de uma mentoria individual. "Se você fosse comprar tudo separado, o valor seria de R$2.997...".</li>
+                        <li><strong>Apresente a Oferta:</strong> "...mas hoje você não vai pagar isso. O investimento é de apenas R$497."</li>
+                        <li><strong>Reforce o Valor:</strong> Compare o preço a um custo pequeno e diário. "É menos que uma xícara de café por dia para transformar sua carreira."</li>
+                    </ol>
+                </div>
+                <div class="highlight-box">
+                <p>Nunca apresente seu preço no vácuo. O valor é relativo, e é seu trabalho criar o contexto certo.</p>
+                </div>
+            </div>
+            <div class="page-number">16</div>
         </div>
 
         <div class="page content-page">
             <div class="content-page-wrapper">
-                <h2>O Cérebro Triuno de MacLean</h2>
-                <p>Paul MacLean (Yale/Harvard) identificou 3 "cérebros" que influenciam decisões:</p>
+                <h2>O Cérebro Triuno em Ação na sua Página</h2>
+                <p>Sua página de vendas precisa conversar com as três partes do cérebro do seu cliente, na ordem certa.</p>
                 <div class="framework-box">
-                    <h4>🦎 Cérebro Reptiliano (Sobrevivência)</h4>
-                    <ul style="list-style: none; padding: 0; line-height: 2;">
-                        <li>⚡ <strong>Decisões instantâneas</strong></li>
-                        <li>💰 <strong>Medo de perder dinheiro</strong></li>
-                        <li>🛡️ <strong>Busca por segurança</strong></li>
-                        <li>🎯 <strong>Responde a: garantias, selo de segurança, prova social</strong></li>
+                    <h4>Conquistando os 3 Cérebros</h4>
+                    <p><strong>1. Cérebro Reptiliano (Instintivo):</strong> É o porteiro. Ele só se importa com segurança e sobrevivência. Sua página precisa passar nesse filtro primeiro.</p>
+                    <ul>
+                        <li><strong>Como Agradá-lo:</strong> Design profissional, selos de segurança, garantias claras ("Risco Zero"), prova social forte. Se a página parecer amadora ou perigosa, ele fecha a porta.</li>
                     </ul>
-                </div>
-                <div class="framework-box">
-                    <h4>🧠 Cérebro Límbico (Emoções)</h4>
-                    <ul style="list-style: none; padding: 0; line-height: 2;">
-                        <li>❤️ <strong>Centro das emoções</strong></li>
-                        <li>🎭 <strong>Memórias e experiências</strong></li>
-                        <li>👥 <strong>Conexões sociais</strong></li>
-                        <li>🎯 <strong>Responde a: storytelling, cores, imagens, música</strong></li>
+                    <p><strong>2. Cérebro Límbico (Emocional):</strong> Uma vez que o porteiro liberou a entrada, você precisa gerar emoção. É aqui que a venda acontece.</p>
+                    <ul>
+                        <li><strong>Como Agradá-lo:</strong> Storytelling, imagens de pessoas felizes (o resultado), vídeos, uma copy que fale das dores e dos sonhos do cliente.</li>
                     </ul>
-                </div>
-                <div class="framework-box">
-                    <h4>🎓 Neocórtex (Racionalização)</h4>
-                    <ul style="list-style: none; padding: 0; line-height: 2;">
-                        <li>📊 <strong>Análise lógica</strong></li>
-                        <li>🔍 <strong>Comparação de opções</strong></li>
-                        <li>📋 <strong>Justificativas para outros</strong></li>
-                        <li>🎯 <strong>Responde a: dados, especificações, ROI</strong></li>
+                    <p><strong>3. Neocórtex (Racional):</strong> Após a decisão emocional, o cliente procura dados para justificar a compra para si mesmo (e para os outros).</p>
+                    <ul>
+                        <li><strong>Como Agradá-lo:</strong> Dados, especificações, gráficos de ROI, comparações lógicas, FAQs detalhados.</li>
                     </ul>
                 </div>
             </div>
             <div class="page-number">17</div>
         </div>
 
+<div class="page chapter-header" id="chapter-3-header">
+    <div class="chapter-shape shape-1" style="background-color: rgba(0, 0, 0, 0.1);"></div>
+    <div class="chapter-shape shape-2" style="background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(0,0,0,0.05) 10px, rgba(0,0,0,0.05) 20px);"></div>
+    <div class="chapter-content-wrapper">
+        <div class="chapter-number-column">
+            <span class="chapter-number-large">03</span>
+        </div>
+        <div class="chapter-text-column">
+            <h1 class="chapter-title">A Experiência<br>Interface 🖥️</h1>
+            <p class="chapter-subtitle">Projetando uma Máquina de Conversão (MIT)</p>
+        </div>
+    </div>
+</div>
+
         <div class="page content-page">
             <div class="content-page-wrapper">
-                <h2>O Sistema de Recompensas</h2>
-                <p>Estudos de Stanford sobre <strong>neuroplasticidade</strong> mostram como criar "vício" em sua marca:</p>
-                <h3>O Ciclo da Dopamina</h3>
-                <div class="framework-box">
-                    <ol class="step-list">
-                        <li><strong>Gatilho:</strong> Notificação, email, anúncio</li>
-                        <li><strong>Ação:</strong> Clicar, visitar, engajar</li>
-                        <li><strong>Recompensa:</strong> Conteúdo de valor, desconto, informação</li>
-                        <li><strong>Investimento:</strong> Compartilhar, comentar, indicar</li>
-                    </ol>
-                </div>
-                <div class="theory-source">
-                    <div class="university">Stanford - Persuasive Technology Lab</div>
-                    <p>BJ Fogg provou que <strong>Comportamento = Motivação × Habilidade × Trigger</strong>. Todos os três devem estar presentes simultaneamente.</p>
-                </div>
-                <div class="quote-box">
-                    "Marcas viciantes não vendem produtos. Elas vendem alívio para dores que elas mesmas identificaram"
-                </div>
+                <h2>Design Não é Arte, é Ciência</h2>
+                <p>Pesquisas do MIT mostram que o design de uma interface pode aumentar a percepção de valor de um produto em até 400%. Um bom design não é apenas "bonito", ele guia o usuário, reduz a fricção e inspira confiança.</p>
+                <p>Nesta seção, vamos ver como aplicar princípios científicos de design para maximizar suas conversões.</p>
             </div>
-            <div class="page-number">18</div>
+            <div class="page-number">19</div>
         </div>
-
-        <div class="page chapter-header pink-chapter">
-            <div class="chapter-number">05</div>
-            <h1 class="chapter-title">Design<br>Persuasivo</h1>
-            <p class="chapter-subtitle">Como Stanford e MIT Criaram a Ciência da Interface</p>
-        </div>
-
+        
         <div class="page content-page">
             <div class="content-page-wrapper">
-                <h2>A Psicologia das Cores que Vendem</h2>
-                <p>Universidade de Columbia estudou como cores afetam decisões de compra online:</p>
-                <div class="stats-grid">
-                    <div class="stat-item" style="background: #e74c3c;"><span class="stat-number">🔴</span><p>Vermelho: +21% urgência</p></div>
-                    <div class="stat-item" style="background: #27ae60;"><span class="stat-number">🟢</span><p>Verde: +15% confiança</p></div>
-                    <div class="stat-item" style="background: #3498db;"><span class="stat-number">🔵</span><p>Azul: +18% credibilidade</p></div>
-                    <div class="stat-item" style="background: #f39c12;"><span class="stat-number">🟡</span><p>Laranja: +24% ação</p></div>
-                </div>
-                <div class="theory-source">
-                    <div class="university">Columbia University - Color Psychology</div>
-                    <p>"Color psychology suggests that various shades can have a wide range of effects, from boosting our mood to causing anxiety"</p>
-                </div>
-                <h3>Hierarquia Visual para Conversão</h3>
-                <div class="framework-box">
-                    <ol class="step-list">
-                        <li><strong>Headline:</strong> 3x maior que o corpo do texto</li>
-                        <li><strong>CTA Button:</strong> Cor contrastante, 44px mínimo</li>
-                        <li><strong>Preço:</strong> Tamanho grande, cor de destaque</li>
-                        <li><strong>Benefícios:</strong> Lista com ícones visuais</li>
-                        <li><strong>Prova Social:</strong> Próxima ao CTA</li>
-                    </ol>
-                </div>
+                <h2>Hierarquia Visual: Uma Demonstração Prática</h2>
+                <p>Seu cérebro não lê, ele escaneia. Por isso, o design precisa dizer a ele o que é mais importante. Observe como seus olhos se movem nesta página:</p>
+                
+                <div class="hierarchy-demo-large">Primeiro você lê esta frase.</div>
+                <div class="hierarchy-demo-medium">Depois, seu olhar desce para este subtítulo, que dá mais contexto.</div>
+                <div class="hierarchy-demo-small">E só então, se o assunto interessar, você se dará ao trabalho de ler este texto menor, com os detalhes.</div>
+
+                <p style="margin-top: 3rem;">Este é o poder da hierarquia. Usamos tamanho, peso e cor para criar um caminho para os olhos do leitor. Em uma página de vendas, sua headline com o maior benefício deve ser o elemento de maior peso visual, seguido pela imagem do produto/resultado e pelo botão de compra (CTA).</p>
             </div>
             <div class="page-number">20</div>
         </div>
+        
+<div class="page content-page">
+    <div class="content-page-wrapper">
+        <h2>A Psicologia das Cores e Fontes</h2>
+        <p>Cores e fontes não são decisões artísticas, são ferramentas estratégicas para evocar emoções específicas no Sistema 1.</p>
+        
+        <div class="color-card-grid">
+            <div class="color-card blue">
+                <div class="color-card-header">
+                    <div class="color-swatch">+</div>
+                    <h4>Azul</h4>
+                </div>
+                <p>Comunica confiança, segurança e profissionalismo. Ideal para checkout, páginas de pagamento e áreas de garantia.</p>
+            </div>
 
+            <div class="color-card red">
+                <div class="color-card-header">
+                    <div class="color-swatch">!</div>
+                    <h4>Vermelho & Laranja</h4>
+                </div>
+                <p>Cria urgência e chama para a ação. Perfeito para botões de "Comprar Agora" e alertas de escassez.</p>
+            </div>
+
+            <div class="color-card green">
+                <div class="color-card-header">
+                    <div class="color-swatch">✓</div>
+                    <h4>Verde</h4>
+                </div>
+                <p>Associado a "ir", "sucesso" e finanças. Ótimo para mensagens de confirmação e para o setor financeiro.</p>
+            </div>
+
+            <div class="color-card dark">
+                <div class="color-card-header">
+                    <div class="color-swatch">★</div>
+                    <h4>Preto & Cinza Escuro</h4>
+                </div>
+                <p>Transmite luxo, sofisticação e poder. Usado por marcas premium para criar uma aura de exclusividade.</p>
+            </div>
+        </div>
+
+        <h3>Fontes que Vendem:</h3>
+        <p><strong>Fontes Serifadas (com "pés", como Times New Roman):</strong> Transmitem tradição, autoridade e confiança. Boas para headlines de materiais formais.</p>
+        <p><strong>Fontes Sem Serifa (retas, como Arial, Helvetica):</strong> Transmitem modernidade, clareza e minimalismo. São as mais usadas para o corpo do texto na web por sua legibilidade.</p>
+    </div>
+    <div class="page-number">21</div>
+</div>
+        
         <div class="page content-page">
             <div class="content-page-wrapper">
-                <h2>Lei de Fitts e UX Persuasiva</h2>
-                <p>Paul Fitts (University of Wisconsin) descobriu: <strong>tempo para alcançar um alvo = distância ÷ tamanho</strong>.</p>
-                <div class="framework-box">
-                    <h4>Aplicação em E-commerce:</h4>
-                    <ul style="list-style: none; padding: 0; line-height: 2.5;">
-                        <li>🎯 <strong>Botão "Comprar":</strong> Maior e mais próximo da descrição</li>
-                        <li>🎯 <strong>Formulários:</strong> Campos grandes, poucos cliques</li>
-                        <li>🎯 <strong>Menu:</strong> Itens importantes no topo</li>
-                        <li>🎯 <strong>Mobile:</strong> Botões mínimo 44px (regra Apple/Google)</li>
+                <h2>Reduzindo a Carga Cognitiva</h2>
+                <p>Carga cognitiva é o esforço mental necessário para usar sua página. Quanto mais seu cliente precisa pensar, menor a chance de ele comprar. Sua meta é tornar o processo de compra tão fácil que pareça automático.</p>
+                <h3>Lei de Fitts na Prática:</h3>
+                 <p>Essa lei da Interação Humano-Computador diz que o tempo para alcançar um alvo é uma função da distância e do tamanho do alvo. Em e-commerce, isso significa:</p>
+                 <div class="framework-box">
+                    <h4>Checklist de Redução de Fricção:</h4>
+                     <ul>
+                        <li><strong>Botões Grandes e Próximos:</strong> Seus botões de compra devem ser grandes, fáceis de clicar (especialmente no mobile) e posicionados perto da informação que os motiva.</li>
+                        <li><strong>Menos Campos de Formulário:</strong> Você realmente precisa do telefone, CPF e data de nascimento do cliente AGORA? Cada campo extra é um ponto de desistência. A Amazon patenteou a compra com 1-clique por um motivo.</li>
+                        <li><strong>Consistência Visual:</strong> Use os mesmos estilos e cores para elementos similares. O cérebro aprende o padrão e navega mais rápido.</li>
                     </ul>
                 </div>
-                <div class="theory-source">
-                    <div class="university">MIT - Computer Science & UX Research</div>
-                    <p>Estudos do MIT mostram que <strong>cada segundo de delay reduz conversões em 7%</strong>. A velocidade é parte da persuasão.</p>
-                </div>
-                <h3>Eye-Tracking e Padrões F/Z</h3>
-                <p>Jakob Nielsen (ex-professor visitante Stanford) mapeou como os olhos "leem" páginas web:</p>
-                <div class="highlight-box">
-                    <p><strong>Padrão F:</strong> Páginas de texto (blogs, artigos)<br>
-                    <strong>Padrão Z:</strong> Landing pages com pouco texto<br>
-                    <strong>Padrão Gutenberg:</strong> Layouts simétricos</p>
-                </div>
             </div>
-            <div class="page-number">21</div>
-        </div>
-
-        <div class="page chapter-header blue-chapter">
-            <div class="chapter-number">06</div>
-            <h1 class="chapter-title">Framework de<br>Conversão</h1>
-            <p class="chapter-subtitle">A Metodologia Científica para Vender Mais</p>
+            <div class="page-number">22</div>
         </div>
 
         <div class="page content-page">
             <div class="content-page-wrapper">
-                <h2>AIDA 2.0: A Versão Científica</h2>
-                <p>O modelo AIDA clássico, atualizado com neurociência e psicologia comportamental:</p>
-                <div class="framework-box">
-                    <h4>🎯 ATENÇÃO (Sistema 1)</h4>
-                    <p><strong>Tempo:</strong> 0-3 segundos<br><strong>Objetivo:</strong> Parar o scroll<br><strong>Técnicas:</strong> Contraste visual, movimento, curiosidade</p>
-                    <h4>🧠 INTERESSE (Sistema 1 → 2)</h4>
-                    <p><strong>Tempo:</strong> 3-15 segundos<br><strong>Objetivo:</strong> Engajar cognitivamente<br><strong>Técnicas:</strong> Benefício claro, relevância pessoal</p>
-                    <h4>❤️ DESEJO (Sistema Límbico)</h4>
-                    <p><strong>Tempo:</strong> 15-60 segundos<br><strong>Objetivo:</strong> Criar urgência emocional<br><strong>Técnicas:</strong> Storytelling, social proof, escassez</p>
-                    <h4>⚡ AÇÃO (Sistema Motor)</h4>
-                    <p><strong>Tempo:</strong> 1-5 segundos<br><strong>Objetivo:</strong> Eliminar fricção<br><strong>Técnicas:</strong> CTA claro, processo simples, garantias</p>
+                <h2>Velocidade é Dinheiro (E Autoridade)</h2>
+                <p>Estudos do MIT e do Google são claros: cada segundo de atraso no carregamento da sua página diminui as conversões em até 7%.</p>
+                <div class="meta-comment">
+                    <p><strong>Vamos usar este próprio ebook como exemplo prático:</strong> Por que você está lendo isso em uma página web interativa e não em um arquivo PDF que enviamos por e-mail?</p>
+                    <p><strong>Porque a experiência é superior.</strong> Esta página carregou instantaneamente. Ela se adapta perfeitamente à sua tela, seja no computador ou no celular. A navegação é fluida. Tudo isso é intencional.</p>
+                    <p>Ao entregar nosso conteúdo da melhor forma técnica possível, estamos aplicando a <strong>Fase 3 (Interface)</strong> e construindo nossa <strong>Autoridade (Fase 2)</strong>. Mostramos que nos importamos com seu tempo e sua experiência, o que gera confiança em nossa marca.</p>
+                </div>
+                <h3>Otimizações Essenciais:</h3>
+                 <div class="framework-box">
+                    <ol class="step-list">
+                        <li><strong>Otimize Imagens:</strong> Use ferramentas como TinyPNG ou Squoosh para reduzir o tamanho dos arquivos de imagem sem perder muita qualidade. Use formatos modernos como WebP.</li>
+                        <li><strong>Escolha uma Boa Hospedagem:</strong> Uma hospedagem barata e lenta é o jeito mais fácil de jogar dinheiro fora. Invista em um servidor rápido e confiável.</li>
+                        <li><strong>Minimize o Código:</strong> Use plugins de cache e otimização para "limpar" seu código (CSS, JavaScript) e entregá-lo de forma mais eficiente ao navegador do usuário.</li>
+                    </ol>
                 </div>
             </div>
             <div class="page-number">23</div>
         </div>
 
-        <div class="page content-page">
-            <div class="content-page-wrapper">
-                <h2>A Fórmula Científica da Conversão</h2>
-                <div class="theory-source">
-                    <div class="university">Wharton School - Conversion Research</div>
-                    <p>Bryan Eisenberg (consultor Wharton) criou a fórmula matemática da conversão online.</p>
-                </div>
-                <div class="highlight-box" style="font-size: 1.4rem;">
-                    <p><strong>C = 4M + 3V + 2(I-F) - 2A</strong></p>
-                    <br>
-                    <p>C = Conversão<br>M = Motivação<br>V = Proposta de Valor<br>I = Incentivo<br>F = Fricção<br>A = Ansiedade</p>
-                </div>
-                <h3>Aplicação Prática:</h3>
-                <div class="framework-box">
-                    <h4>Para Maximizar Conversão:</h4>
-                    <ol class="step-list">
-                        <li><strong>Aumentar Motivação (4x):</strong> Problema doloroso + solução clara</li>
-                        <li><strong>Aumentar Valor (3x):</strong> Benefícios > preço na mente do cliente</li>
-                        <li><strong>Reduzir Fricção:</strong> Menos campos, processo mais simples</li>
-                        <li><strong>Reduzir Ansiedade:</strong> Garantias, segurança, transparência</li>
-                    </ol>
-                </div>
-            </div>
-            <div class="page-number">24</div>
+<div class="page chapter-header" id="chapter-4-header">
+    <div class="chapter-shape shape-1" style="background-color: rgba(255, 255, 255, 0.2);"></div>
+    <div class="chapter-shape shape-2" style="background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,0.1) 10px, rgba(255,255,255,0.1) 20px);"></div>
+    <div class="chapter-content-wrapper">
+        <div class="chapter-number-column">
+            <span class="chapter-number-large">04</span>
         </div>
+        <div class="chapter-text-column">
+            <h1 class="chapter-title">A Evolução<br>Otimização 📈</h1>
+            <p class="chapter-subtitle">Transformando Dados em Lucro (Harvard)</p>
+        </div>
+    </div>
+</div>
 
         <div class="page content-page">
             <div class="content-page-wrapper">
-                <h2>A Ciência do A/B Testing</h2>
-                <p>Google e universidades como MIT provaram: <strong>pequenas mudanças = grandes resultados</strong>.</p>
-                <div class="stats-grid">
-                    <div class="stat-item"><span class="stat-number">41%</span><p>aumento só mudando cor do botão</p></div>
-                    <div class="stat-item"><span class="stat-number">300%</span><p>mais conversão com urgência real</p></div>
-                    <div class="stat-item"><span class="stat-number">127%</span><p>melhoria com social proof</p></div>
+                <h2>Sua Opinião Não Importa (Mas a dos Dados, Sim)</h2>
+                <p>A fase de otimização é o que separa os amadores dos profissionais. Lançar uma página de vendas não é o fim, é o começo. A Harvard Business School ensina que as empresas de maior sucesso hoje são orientadas por dados e experimentação constante.</p>
+                <div class="quote-box">
+                "Without data, you're just another person with an opinion." - W. Edwards Deming
                 </div>
-                <div class="theory-source">
-                    <div class="university">Harvard Business School - Experimentation</div>
-                    <p>"The most successful organizations today are data-driven. They run experiments constantly and let data guide their decisions."</p>
-                </div>
-                <h3>O que Testar (por Ordem de Impacto):</h3>
-                <div class="framework-box">
-                    <ol class="step-list">
-                        <li><strong>Headlines:</strong> Primeira coisa que veem</li>
-                        <li><strong>CTAs:</strong> Cor, texto, posição</li>
-                        <li><strong>Preços:</strong> Formato, posição, contexto</li>
-                        <li><strong>Social Proof:</strong> Tipo, quantidade, posição</li>
-                        <li><strong>Formulários:</strong> Número de campos</li>
-                    </ol>
-                </div>
+                <p>Vamos ver as ferramentas e processos para transformar sua página em um organismo vivo que melhora a cada dia.</p>
             </div>
             <div class="page-number">25</div>
         </div>
 
         <div class="page content-page">
             <div class="content-page-wrapper">
-                <h2>O Framework Definitivo</h2>
-                <p>Combinando todas as teorias em uma metodologia aplicável:</p>
+                <h2>A Ciência do Teste A/B</h2>
+                <p>Teste A/B é o processo de criar duas versões de uma página (A e B), mudando apenas UM elemento, e mostrar cada versão para metade do seu tráfego para ver qual delas gera mais conversões.</p>
+                <h3>O que Testar (em Ordem de Impacto):</h3>
                 <div class="framework-box">
-                    <h4>METODOLOGIA HARVARD-WHARTON-MIT:</h4>
-                    <h4 style="color: #e74c3c;">Fase 1: PSICOLOGIA (Wharton)</h4>
-                    <ul style="list-style: none; padding: 0;"><li>• Defina persona com base em vieses cognitivos</li><li>• Identifique dores específicas (loss aversion)</li><li>• Mapeie jornada emocional do cliente</li></ul>
-                    <h4 style="color: #e74c3c;">Fase 2: PERSUASÃO (Stanford)</h4>
-                    <ul style="list-style: none; padding: 0;"><li>• Aplique os 6 princípios de Cialdini</li><li>• Crie sequência de micro-compromissos</li><li>• Use prova social estratégica</li></ul>
-                    <h4 style="color: #e74c3c;">Fase 3: INTERFACE (MIT)</h4>
-                    <ul style="list-style: none; padding: 0;"><li>• Design baseado em eye-tracking</li><li>• Hierarquia visual científica</li><li>• Velocidade otimizada</li></ul>
-                    <h4 style="color: #e74c3c;">Fase 4: OTIMIZAÇÃO (Harvard)</h4>
-                    <ul style="list-style: none; padding: 0;"><li>• A/B testing sistemático</li><li>• Análise de comportamento</li><li>• Iteração baseada em dados</li></ul>
+                     <ol class="step-list">
+                        <li><strong>Headline (Título Principal):</strong> É o elemento de maior alavancagem. Teste uma headline focada em um benefício contra outra focada em evitar uma dor.</li>
+                        <li><strong>Oferta:</strong> Teste o preço (R$497 vs R$597), a garantia (30 vs 60 dias) ou os bônus inclusos.</li>
+                        <li><strong>CTA (Chamada para Ação):</strong> Teste o texto do botão ("Comprar Agora" vs "Garantir Minha Vaga") e a cor.</li>
+                        <li><strong>Prova Social:</strong> Teste depoimentos em vídeo contra depoimentos em texto.</li>
+                        <li><strong>Layout da Página:</strong> Teste uma versão longa contra uma versão mais curta e direta.</li>
+                    </ol>
                 </div>
             </div>
             <div class="page-number">26</div>
@@ -864,32 +1217,40 @@
 
         <div class="page content-page">
             <div class="content-page-wrapper">
-                <h2>Cases de Sucesso Baseados em Ciência</h2>
-                <h3>Case 1: Obama Campaign 2012</h3>
-                <p>Time de Harvard/MIT testou 240 versões da página de doação:</p>
-                <div class="highlight-box"><p><strong>Resultado:</strong> +49% conversão = $60 milhões extras</p><p><strong>Mudança:</strong> Botão de "Learn More" para "Contribute Now"</p><p><strong>Teoria:</strong> Call-to-action direto (Sistema 1)</p></div>
-                <h3>Case 2: Dropbox Growth Hack</h3>
-                <p>Aplicaram reciprocidade + network effects:</p>
-                <div class="highlight-box"><p><strong>Resultado:</strong> 3900% crescimento em 15 meses</p><p><strong>Estratégia:</strong> "Indique amigos, ganhe espaço grátis"</p><p><strong>Teoria:</strong> Reciprocidade + viral loops</p></div>
-                <h3>Case 3: Amazon One-Click</h3>
-                <p>Redução de fricção baseada em psicologia cognitiva:</p>
-                <div class="highlight-box"><p><strong>Resultado:</strong> Bilhões em vendas extras</p><p><strong>Inovação:</strong> Eliminar etapas de checkout</p><p><strong>Teoria:</strong> Redução de carga cognitiva</p></div>
+                <h2>Análise de Comportamento: Heatmaps e Gravações</h2>
+                <p>Ferramentas como Hotjar ou FullStory permitem que você veja sua página através dos olhos do seu cliente.</p>
+                <h3>Mapas de Calor (Heatmaps)</h3>
+                <p>Mostram onde os usuários mais clicam (mapas de cliques), movem o mouse (mapas de movimento) e até onde rolam a página (mapas de rolagem).</p>
+                <div class="framework-box">
+                    <h4>Interpretando Heatmaps:</h4>
+                    <ul>
+                        <li><strong>Muitos cliques em uma imagem não clicável?</strong> Talvez os usuários achem que é um link. Considere adicionar um.</li>
+                        <li><strong>Ninguém rola abaixo de uma certa seção?</strong> Talvez essa seção seja confusa, desinteressante ou pareça ser o fim da página.</li>
+                        <li><strong>Nenhum clique no seu CTA principal?</strong> Ele pode não estar visível ou atraente o suficiente.</li>
+                    </ul>
+                </div>
+
+                <h3>Gravações de Sessão</h3>
+                <p>São vídeos anônimos da navegação real de um usuário em seu site. É a forma mais poderosa de encontrar pontos de fricção que você nunca imaginaria.</p>
+                 <div class="highlight-box">
+                    <p>Assista a 10 gravações de usuários que abandonaram seu checkout. A razão do abandono provavelmente ficará óbvia.</p>
+                </div>
             </div>
             <div class="page-number">27</div>
         </div>
 
         <div class="page content-page">
             <div class="content-page-wrapper">
-                <h2>Checklist de Implementação</h2>
+                <h2>Métricas (KPIs) que Realmente Importam</h2>
+                <p>Muitas pessoas se perdem em "métricas de vaidade" como número de curtidas ou visualizações. Para otimizar vendas, você precisa focar nos indicadores que impactam diretamente o seu faturamento.</p>
+                <h3>Seu Painel de Controle de Otimização:</h3>
                 <div class="framework-box">
-                    <h4>🧠 PSICOLOGIA (Semana 1-2)</h4>
-                    <ul style="list-style: none; padding: 0; line-height: 2;"><li>□ Persona baseada em vieses cognitivos</li><li>□ Mapa de dores específicas</li><li>□ Jornada emocional do cliente</li><li>□ Pontos de fricção identificados</li></ul>
-                    <h4>🎨 DESIGN (Semana 3-4)</h4>
-                    <ul style="list-style: none; padding: 0; line-height: 2;"><li>□ Hierarquia visual baseada em eye-tracking</li><li>□ Cores alinhadas com psicologia</li><li>□ CTAs otimizados (tamanho/posição)</li><li>□ Mobile-first design</li></ul>
-                    <h4>📝 COPY (Semana 5-6)</h4>
-                    <ul style="list-style: none; padding: 0; line-height: 2;"><li>□ Headlines com anchoring</li><li>□ Social proof estratégico</li><li>□ Copy baseado em loss aversion</li><li>□ CTAs com verbos de ação</li></ul>
-                    <h4>📊 TESTE (Semana 7-8)</h4>
-                    <ul style="list-style: none; padding: 0; line-height: 2;"><li>□ A/B testing configurado</li><li>□ Métricas de conversão acompanhadas</li><li>□ Heatmaps instalados</li><li>□ Iteração semanal</li></ul>
+                    <ul style="list-style-type: '✅  '; padding-left: 20px;">
+                        <li><strong>Taxa de Conversão (TC):</strong> A métrica-rainha. (Número de Vendas ÷ Número de Visitantes) * 100. Seu objetivo é aumentar esse número constantemente.</li>
+                        <li><strong>Custo por Aquisição (CPA):</strong> Quanto você gasta em marketing para conseguir um cliente. (Custo Total da Campanha ÷ Número de Vendas).</li>
+                        <li><strong>Valor do Tempo de Vida do Cliente (LTV):</strong> Quanto um cliente gasta com você em média durante todo o relacionamento. O objetivo é que o LTV seja muito maior que o CPA.</li>
+                        <li><strong>Taxa de Abandono de Carrinho:</strong> A porcentagem de pessoas que iniciam o checkout mas não o concluem. Reduzir essa taxa é uma das formas mais rápidas de aumentar o lucro.</li>
+                    </ul>
                 </div>
             </div>
             <div class="page-number">28</div>
@@ -897,72 +1258,232 @@
 
         <div class="page content-page">
             <div class="content-page-wrapper">
-                <h2>O Que Você Aprendeu</h2>
-                <p>Este ebook compilou <strong>décadas de pesquisa das melhores universidades do mundo</strong> em um framework prático para vendas online.</p>
-                <div class="quote-box">
-                    "Conhecimento sem ação é apenas entretenimento intelectual"
-                </div>
-                <h3>Suas Próximas Ações:</h3>
+                <h2>O Ciclo de Iteração Contínua</h2>
+                <p>A otimização não é um projeto com data para acabar. É um processo contínuo de aprendizado e melhoria.</p>
                 <div class="framework-box">
+                    <h4>O Ciclo Infinito de Otimização:</h4>
                     <ol class="step-list">
-                        <li><strong>Implemente 1 técnica por semana</strong> (não todas de uma vez)</li>
-                        <li><strong>Meça tudo</strong> - dados > opinião</li>
-                        <li><strong>Teste constantemente</strong> - o mercado muda</li>
-                        <li><strong>Estude o comportamento</strong> dos seus clientes específicos</li>
+                        <li><strong>Analisar:</strong> Use o Google Analytics, heatmaps e gravações para observar o comportamento atual e identificar problemas.</li>
+                        <li><strong>Formular Hipótese:</strong> Crie uma hipótese baseada nos dados. Ex: "Acredito que mudar a cor do CTA para laranja aumentará os cliques porque ele terá mais contraste com o fundo azul."</li>
+                        <li><strong>Testar:</strong> Crie um Teste A/B para validar sua hipótese. Deixe rodar até ter relevância estatística (geralmente algumas centenas de conversões).</li>
+                        <li><strong>Aprender e Implementar:</strong> Se a hipótese for vencedora, implemente a mudança para 100% do tráfego. Se não for, analise por que falhou e use o aprendizado para formular a próxima hipótese.</li>
+                        <li><strong>Repetir:</strong> Volte para o passo 1.</li>
                     </ol>
                 </div>
-                <p>Lembre-se: <strong>você não está vendendo produtos, está resolvendo problemas</strong>. A ciência apenas te ajuda a comunicar isso de forma mais eficaz.</p>
-                <div class="highlight-box">
-                    <p style="font-size: 1.4rem;">Sucesso não é sorte. É ciência aplicada com consistência.</p>
-                </div>
+                <p>Empresas como Amazon e Netflix rodam centenas de testes como este todos os dias. É por isso que elas dominam seus mercados.</p>
             </div>
             <div class="page-number">29</div>
         </div>
+        
+<div class="page chapter-header" id="synthesis-header">
+    <div class="chapter-shape shape-1" style="background-color: rgba(255, 255, 255, 0.1);"></div>
+    <div class="chapter-shape shape-2" style="background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,0.05) 10px, rgba(255,255,255,0.05) 20px);"></div>
+    <div class="chapter-content-wrapper">
+        <div class="chapter-number-column">
+            <span class="chapter-number-large">✓</span>
+        </div>
+        <div class="chapter-text-column">
+            <h1 class="chapter-title">Síntese<br>O Framework em Ação</h1>
+            <p class="chapter-subtitle">Juntando Todas as Peças</p>
+        </div>
+    </div>
+</div>
 
+        <div class="page content-page">
+            <div class="content-page-wrapper">
+                <h2>O Framework Definitivo (Resumo)</h2>
+                <p>Aqui está o resumo do nosso processo de 4 fases para criar uma máquina de vendas online cientificamente comprovada.</p>
+                <div class="framework-summary-box">
+    <div class="phase-block psychology">
+        <h4 class="phase-title">Fase 1: PSICOLOGIA (Wharton) 🧠</h4>
+        <ul class="phase-actions">
+            <li>Defina a Persona Psicológica com base em vieses cognitivos.</li>
+            <li>Identifique as dores e enquadre-as em termos de Aversão à Perda.</li>
+            <li>Mapeie a Jornada Emocional do cliente, da frustração ao alívio.</li>
+        </ul>
+    </div>
+
+    <div class="phase-block persuasion">
+        <h4 class="phase-title">Fase 2: PERSUASÃO (Stanford) 🧲</h4>
+        <ul class="phase-actions">
+            <li>Estruture o argumento de vendas com os 6 princípios de Cialdini.</li>
+            <li>Crie uma sequência de micro-compromissos para engajar o usuário.</li>
+            <li>Use Prova Social em pontos estratégicos para quebrar objeções.</li>
+        </ul>
+    </div>
+
+    <div class="phase-block interface">
+        <h4 class="phase-title">Fase 3: INTERFACE (MIT) 🖥️</h4>
+        <ul class="phase-actions">
+            <li>Projete com base em Hierarquia Visual e padrões de eye-tracking.</li>
+            <li>Reduza a Carga Cognitiva e a fricção em cada etapa.</li>
+            <li>Garanta que a Velocidade de carregamento seja máxima.</li>
+        </ul>
+    </div>
+
+    <div class="phase-block optimization">
+        <h4 class="phase-title">Fase 4: OTIMIZAÇÃO (Harvard) 📈</h4>
+        <ul class="phase-actions">
+            <li>Execute Testes A/B sistemáticos nos elementos de maior impacto.</li>
+            <li>Analise o comportamento do usuário com heatmaps e gravações.</li>
+            <li>Itere constantemente com base em dados, não em opiniões.</li>
+        </ul>
+    </div>
+</div>
+            </div>
+            <div class="page-number">31</div>
+        </div>
+
+        <div class="page content-page">
+            <div class="content-page-wrapper">
+                <h2>Cases de Sucesso Através do Framework</h2>
+                <h3>Case 1: Obama Campaign 2012</h3>
+                <p>O time de Harvard/MIT usou a <strong>Fase 4 (Otimização)</strong> para testar 240 versões da página de doação.</p>
+                <div class="highlight-box">
+                    <p><strong>Resultado:</strong> +49% conversão = $60 milhões extras</p>
+                    <p><strong>Mudança:</strong> Um simples Teste A/B no texto do botão, de "Learn More" para "Contribute Now".</p>
+                </div>
+                <h3>Case 2: Dropbox Growth Hack</h3>
+                <p>Aplicaram a <strong>Fase 2 (Persuasão)</strong>, especificamente a Reciprocidade.</p>
+                <div class="highlight-box">
+                    <p><strong>Resultado:</strong> 3900% de crescimento em 15 meses</p>
+                    <p><strong>Estratégia:</strong> "Indique um amigo e ganhe mais espaço grátis". Deram valor (espaço) para receber valor (novos usuários).</p>
+                </div>
+                <h3>Case 3: Amazon One-Click</h3>
+                <p>Um exemplo mestre da <strong>Fase 3 (Interface)</strong>, focado em reduzir a carga cognitiva e a fricção ao extremo.</p>
+                <div class="highlight-box">
+                    <p><strong>Resultado:</strong> Bilhões em vendas extras</p>
+                    <p><strong>Inovação:</strong> Eliminar todas as etapas possíveis do checkout, tornando a compra impulsiva e sem esforço.</p>
+                </div>
+            </div>
+            <div class="page-number">32</div>
+        </div>
+
+        <div class="page content-page">
+            <div class="content-page-wrapper">
+                <h2>Conclusão: Seu Plano de Implementação</h2>
+                <p>Você agora tem em mãos um dos frameworks mais poderosos para vendas digitais. Mas conhecimento sem ação é inútil.</p>
+                <div class="quote-box">
+                    "Conhecimento sem ação é apenas entretenimento intelectual"
+                </div>
+                <h3>Seu Checklist de Ação (Próximos 90 dias):</h3>
+                <div class="framework-box">
+                    <h4>Mês 1: Foco em PSICOLOGIA e PERSUASÃO</h4>
+                     <ul style="list-style-type: '✅  '; padding-left: 20px;">
+                        <li>Defina sua Persona Psicológica.</li>
+                        <li>Reescreva sua principal headline e os 3 primeiros parágrafos da sua página de vendas usando Aversão à Perda.</li>
+                        <li>Colete e posicione 3 depoimentos fortes perto do seu botão de compra.</li>
+                    </ul>
+                    <h4>Mês 2: Foco em INTERFACE</h4>
+                     <ul style="list-style-type: '✅  '; padding-left: 20px;">
+                        <li>Avalie sua página com o checklist de Hierarquia Visual. Faça uma mudança chave (ex: cor do CTA).</li>
+                        <li>Otimize as imagens da sua página para reduzir o tempo de carregamento.</li>
+                        <li>Simplifique seu formulário de checkout, removendo pelo menos um campo.</li>
+                    </ul>
+                    <h4>Mês 3: Foco em OTIMIZAÇÃO</h4>
+                     <ul style="list-style-type: '✅  '; padding-left: 20px;">
+                        <li>Instale o Hotjar (tem plano gratuito) e assista a 20 gravações de sessão. Anote os padrões.</li>
+                        <li>Configure e rode seu primeiro Teste A/B na headline principal.</li>
+                        <li>Crie seu painel com as 4 métricas que importam e o analise semanalmente.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="page-number">33</div>
+        </div>
+
+        <div class="page content-page">
+            <div class="content-page-wrapper">
+                <h2>O Jogo Infinito</h2>
+                <p>Lembre-se: <strong>você não está vendendo produtos, está resolvendo problemas para cérebros humanos</strong>. Este framework é seu guia para comunicar essa solução da forma mais eficaz possível.</p>
+                <p>O mercado muda. Seus concorrentes se adaptam. Mas a psicologia humana é a constante na qual você pode sempre confiar.</p>
+                <div class="highlight-box">
+                    <p style="font-size: 1.4rem;">Sucesso não é um destino. É um processo de otimização contínua.</p>
+                </div>
+                 <p>Agora, vá e aplique. Comece pequeno, meça tudo e nunca pare de testar.</p>
+            </div>
+            <div class="page-number">34</div>
+        </div>
+        
         <div class="page content-page">
             <div class="content-page-wrapper">
                 <h2>Recursos e Bibliografia</h2>
                 <h3>📚 Fontes Acadêmicas:</h3>
                 <div style="font-size: 0.95rem; line-height: 1.8;">
-                    <p><strong>Harvard Business School</strong><br>• Digital Marketing Strategy<br>• Consumer Behavior Research</p>
-                    <p><strong>Wharton School (UPenn)</strong><br>• Behavioral Economics<br>• Consumer Psychology</p>
-                    <p><strong>Stanford University</strong><br>• Persuasive Technology Lab<br>• Design Thinking</p>
-                    <p><strong>MIT Sloan</strong><br>• Digital Business Strategy<br>• Human-Computer Interaction</p>
-                    <p><strong>Columbia Business School</strong><br>• Marketing Science<br>• Consumer Decision Making</p>
+                    <p><strong>Harvard Business School</strong><br>• Digital Marketing Strategy & Experimentation</p>
+                    <p><strong>Wharton School (UPenn)</strong><br>• Behavioral Economics & Consumer Psychology</p>
+                    <p><strong>Stanford University</strong><br>• Persuasive Technology Lab & Design Thinking</p>
+                    <p><strong>MIT Sloan</strong><br>• Digital Business Strategy & Human-Computer Interaction</p>
                 </div>
                 <h3>🔗 Ferramentas Recomendadas:</h3>
                 <div style="line-height: 2;">
-                    <p>• <strong>Analytics:</strong> Google Analytics 4, Hotjar</p>
-                    <p>• <strong>A/B Testing:</strong> Optimizely, VWO</p>
-                    <p>• <strong>Heatmaps:</strong> Crazy Egg, FullStory</p>
-                    <p>• <strong>Forms:</strong> Typeform, ConvertKit</p>
-                </div>
-                <div class="author-info" style="position: static; margin-top: 3rem; text-align: center;">
-                    <p style="font-weight: 600;">Academia da Conversão</p>
-                    <p style="font-size: 0.9rem; opacity: 0.7;">Aplicando ciência às vendas digitais</p>
+                    <p>• <strong>Analytics:</strong> Google Analytics 4</p>
+                    <p>• <strong>Análise de Comportamento:</strong> Hotjar, FullStory, Microsoft Clarity</p>
+                    <p>• <strong>A/B Testing:</strong> Optimizely, VWO, Google Optimize (descontinuado, mas os princípios permanecem)</p>
                 </div>
             </div>
-            <div class="page-number">30</div>
+            <div class="page-number">35</div>
+        </div>
+        
+        <div class="page content-page">
+             <div class="content-page-wrapper" style="text-align: center; margin-top: 4rem;">
+                <p style="font-size: 1.5rem; font-weight: 600;">Obrigado por ler.</p>
+                <p>Agora, a parte mais importante começa: a sua aplicação.</p>
+                <br><br>
+                <p style="font-weight: 600;">Academia da Conversão</p>
+                <p style="font-size: 0.9rem; opacity: 0.7;">Aplicando ciência às vendas digitais</p>
+             </div>
+             <div class="page-number">36</div>
         </div>
 
     </div>
-
     <div class="navigation">
         <button class="nav-btn" id="prevBtn">
             <span class="arrow">←</span>
             <span class="text">Anterior</span>
         </button>
         <div class="page-counter">
-            <span id="currentPageNum">1</span> / 30
+            <span id="currentPageNum">1</span> / 36
         </div>
         <button class="nav-btn" id="nextBtn">
             <span class="text">Próxima</span>
             <span class="arrow">→</span>
         </button>
+        <button class="theme-toggle" id="theme-toggle" title="Alternar tema">
+            <span class="sun">☀️</span>
+            <span class="moon" style="display: none;">🌙</span>
+        </button>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // --- Lógica do Dark Mode ---
+            const themeToggle = document.getElementById('theme-toggle');
+            const sunIcon = themeToggle.querySelector('.sun');
+            const moonIcon = themeToggle.querySelector('.moon');
+            
+            const applyTheme = (theme) => {
+                if (theme === 'dark') {
+                    document.body.classList.add('dark-mode');
+                    sunIcon.style.display = 'none';
+                    moonIcon.style.display = 'inline';
+                } else {
+                    document.body.classList.remove('dark-mode');
+                    sunIcon.style.display = 'inline';
+                    moonIcon.style.display = 'none';
+                }
+            };
+
+            // Verifica o tema salvo no carregamento da página
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            applyTheme(savedTheme);
+
+            themeToggle.addEventListener('click', () => {
+                const newTheme = document.body.classList.contains('dark-mode') ? 'light' : 'dark';
+                localStorage.setItem('theme', newTheme);
+                applyTheme(newTheme);
+            });
+
+            // --- Lógica de Navegação do Ebook ---
             let currentPage = 0;
             const pages = document.querySelectorAll('.ebook-container > .page');
             const totalPages = pages.length;
