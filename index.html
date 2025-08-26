@@ -32,7 +32,6 @@
         
         .page {
             min-height: 100vh;
-            /* Aumentado padding inferior para criar mais espaço seguro */
             padding: 4rem 3rem 10rem 3rem; 
             display: none;
             position: relative;
@@ -86,7 +85,6 @@
         
         .author-info {
            position: absolute;
-           /* Aumentado o 'bottom' para ficar acima da área de navegação */
            bottom: 9rem;
            left: 0;
            right: 0;
@@ -100,7 +98,6 @@
             justify-content: center;
             align-items: center;
             border-radius: 0;
-            /* Adicionado fundo padrão para a página 5 e outros cabeçalhos sem cor específica */
             background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
         }
         
@@ -257,6 +254,25 @@
             cursor: not-allowed;
             transform: none;
             box-shadow: none;
+        }
+        
+        .nav-btn .arrow {
+            display: none;
+        }
+
+        @media (max-width: 420px) {
+            .nav-btn .text {
+                display: none;
+            }
+            .nav-btn .arrow {
+                display: inline;
+            }
+            .nav-btn {
+                padding: 0.8rem 1rem;
+            }
+            .navigation {
+                gap: 0.5rem;
+            }
         }
         
         .page-counter {
@@ -918,14 +934,19 @@
             </div>
             <div class="page-number">30</div>
         </div>
+
     </div>
 
     <div class="navigation">
-        <button class="nav-btn" id="prevBtn">← Anterior</button>
+        <button class="nav-btn" id="prevBtn">
+             <span class="arrow">←</span><span class="text">Anterior</span>
+        </button>
         <div class="page-counter">
             <span id="currentPageNum">1</span> / 30
         </div>
-        <button class="nav-btn" id="nextBtn">Próxima →</button>
+        <button class="nav-btn" id="nextBtn">
+            <span class="text">Próxima</span><span class="arrow">→</span>
+        </button>
     </div>
 
     <script>
@@ -955,8 +976,9 @@
                 prevBtn.disabled = currentPage === 0;
                 nextBtn.disabled = currentPage === (totalPages - 1);
                 
-                // ESTA LINHA GARANTE QUE A PÁGINA VOLTE AO TOPO
-                window.scrollTo(0, 0);
+                requestAnimationFrame(() => {
+                    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+                });
             }
 
             function nextPage() {
