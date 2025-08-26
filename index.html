@@ -1,130 +1,476 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ebook de Vendas Premium</title>
+    <title>Psicologia das Vendas Online - Ebook Completo</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: Arial, sans-serif;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-
-        body {
-            background-color: #f0f0f0;
-        }
-
-        .perguntas-container {
-            width: 100%;
-            padding: 2rem 0;
-            min-height: 100vh; /* Garante que o conteúdo não seja cortado */
-        }
-
-        .perguntas-item {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 3rem 1rem;
-            text-align: center;
-            color: #fff;
-            width: 100%;
-            min-height: 100vh; /* Garante que cada página tenha pelo menos o tamanho da tela */
         }
         
-        /* Estilos para cada página individual */
-        #page-1 { background: linear-gradient(to right, #00C6FF, #0072FF); }
-        #page-2 { background: linear-gradient(to right, #FFC600, #FF7200); }
-        #page-3 { background: linear-gradient(to right, #00FFC6, #00FF72); }
-        #page-4 { background: linear-gradient(to right, #7200FF, #C600FF); }
-        #page-5 { background: linear-gradient(to right, #FF00C6, #FF0072); }
-
-        .respostas-item {
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background: #fff;
+        }
+        
+        .ebook-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+        }
+        
+        .page {
+            min-height: 100vh;
+            padding: 4rem 3rem;
+            display: none;
+            position: relative;
+            page-break-after: always;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        /* Cover Page */
+        .cover {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 3rem 1rem;
-            text-align: center;
-            color: #fff;
-            width: 100%;
-            min-height: 100vh;
         }
-
-        /* Estilos para as páginas de resposta */
-        #answer-1 { background-color: #333; }
-        #answer-2 { background-color: #666; }
-        #answer-3 { background-color: #999; }
-        #answer-4 { background-color: #ccc; }
-        #answer-5 { background-color: #eee; color: #000;}
-
-        .perguntas-item h1, .respostas-item h1 {
+        
+        .cover h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+            text-transform: uppercase;
+        }
+        
+        .cover .subtitle {
+            font-size: 1.5rem;
+            opacity: 0.9;
+            margin-bottom: 3rem;
+            font-weight: 300;
+        }
+        
+        .author-info {
+            position: absolute;
+            bottom: 4rem;
+            text-align: center;
+            width: 100%;
+        }
+        
+        /* Chapter Headers */
+        .chapter-header {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            color: white;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .chapter-number {
+            font-size: 8rem;
+            font-weight: 900;
+            opacity: 0.3;
+            line-height: 1;
+        }
+        
+        .chapter-title {
+            font-size: 3rem;
+            font-weight: 900;
+            margin: 1rem 0;
+            text-transform: uppercase;
+        }
+        
+        .chapter-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 600px;
+        }
+        
+        /* Content Pages */
+        .content-page h2 {
             font-size: 2.5rem;
+            font-weight: 800;
+            color: #2c3e50;
+            margin-bottom: 2rem;
+            border-bottom: 4px solid #3498db;
+            padding-bottom: 1rem;
+        }
+        
+        .content-page h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #e74c3c;
+            margin: 2rem 0 1rem 0;
+        }
+        
+        .content-page p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            font-weight: 600;
+            text-align: center;
+        }
+        
+        .theory-source {
+            background: #f8f9fa;
+            border-left: 4px solid #e74c3c;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 10px 10px 0;
+        }
+        
+        .theory-source .university {
+            font-weight: 700;
+            color: #e74c3c;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #00cec9 0%, #55a3ff 100%);
+            color: white;
+            border-radius: 15px;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            display: block;
+        }
+        
+        .page-number {
+            position: absolute;
+            bottom: 2rem;
+            right: 3rem;
+            font-size: 0.9rem;
+            color: #7f8c8d;
+        }
+        
+        /* Estilo 'Liquid Glass' da Apple para a navegação */
+        .navigation {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.2); /* Fundo semi-transparente */
+            backdrop-filter: blur(20px); /* Efeito de vidro borrado */
+            border: 1px solid rgba(255, 255, 255, 0.3); /* Borda sutil */
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: flex;
+            gap: 1rem;
+            z-index: 1000;
+        }
+        
+        .nav-btn {
+            padding: 0.8rem 1.5rem;
+            background: rgba(255, 255, 255, 0.4); /* Fundo do botão semi-transparente */
+            color: #000;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.6); /* Efeito de hover mais claro */
+            transform: translateY(-2px);
+        }
+        
+        .nav-btn:disabled {
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(0, 0, 0, 0.4);
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .page-counter {
+            background: rgba(0, 0, 0, 0.2);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        
+        /* Special Backgrounds for Different Chapters */
+        .green-chapter {
+            background: linear-gradient(135deg, #00b894 0%, #00cec9 100%);
+        }
+        
+        .yellow-chapter {
+            background: linear-gradient(135deg, #fdcb6e 0%, #e17055 100%);
+        }
+        
+        .purple-chapter {
+            background: linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%);
+        }
+        
+        .framework-box {
+            background: #fff;
+            color: #2c3e50;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .framework-box h4 {
+            color: #e74c3c;
+            font-size: 1.3rem;
             margin-bottom: 1rem;
         }
-
-        .perguntas-item p, .respostas-item p {
-            font-size: 1.2rem;
-            line-height: 1.6;
-            max-width: 800px;
+        
+        .step-list {
+            counter-reset: step-counter;
+            list-style: none;
+            padding: 0;
         }
-
+        
+        .step-list li {
+            counter-increment: step-counter;
+            position: relative;
+            padding-left: 3rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .step-list li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #3498db;
+            color: white;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .quote-box {
+            background: linear-gradient(135deg, #ff7675 0%, #d63031 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            font-style: italic;
+            font-size: 1.2rem;
+            text-align: center;
+            position: relative;
+        }
+        
+        .quote-box::before {
+            content: '"';
+            font-size: 4rem;
+            position: absolute;
+            top: -1rem;
+            left: 1rem;
+            opacity: 0.5;
+        }
+        
+        @media print {
+            .navigation { display: none; }
+            .page { page-break-after: always; }
+        }
     </style>
 </head>
 <body>
-
-    <section class="perguntas-container">
-
-        <div class="perguntas-item" id="page-1">
-            <h1>Pergunta 1</h1>
-            <p>Seja bem-vindo ao Ebook de Vendas Premium. Pronto para aprender?</p>
-        </div>
-
-        <div class="respostas-item" id="answer-1">
-            <h1>Resposta 1</h1>
-            <p>A primeira resposta para a sua pergunta está aqui. Continue rolando para ver mais!</p>
-        </div>
-
-        <div class="perguntas-item" id="page-2">
-            <h1>Pergunta 2</h1>
-            <p>Esta é a segunda página do ebook. O conteúdo é sobre como se destacar no mercado.</p>
-        </div>
-
-        <div class="respostas-item" id="answer-2">
-            <h1>Resposta 2</h1>
-            <p>Aqui está a resposta para a segunda pergunta. O segredo para o sucesso é a persistência!</p>
-        </div>
-
-        <div class="perguntas-item" id="page-3">
-            <h1>Pergunta 3</h1>
-            <p>O que você acha sobre a importância de construir um relacionamento com o cliente?</p>
-        </div>
+    <div class="ebook-container">
         
-        <div class="respostas-item" id="answer-3">
-            <h1>Resposta 3</h1>
-            <p>Construir um relacionamento é fundamental para a fidelização e sucesso a longo prazo. Invista nisso!</p>
-        </div>
-        
-        <div class="perguntas-item" id="page-4">
-            <h1>Pergunta 4</h1>
-            <p>Descreva em uma frase o que é uma venda consultiva na sua opinião.</p>
+        <div class="page cover active">
+            <h1>Psicologia das<br>Vendas Online</h1>
+            <p class="subtitle">Como as Maiores Universidades do Mundo Explicam o Comportamento do Consumidor Digital</p>
+            <div class="author-info">
+                <p style="font-size: 1.2rem; font-weight: 600;">Baseado em Pesquisas de Harvard, Wharton, Stanford & MIT</p>
+                <p style="font-size: 1rem; opacity: 0.8;">Academia da Conversão • 2025</p>
+            </div>
         </div>
 
-        <div class="respostas-item" id="answer-4">
-            <h1>Resposta 4</h1>
-            <p>Venda consultiva é sobre resolver o problema do cliente, não apenas empurrar um produto. É ser um parceiro, não um vendedor!</p>
+        <div class="page content-page">
+            <h2>Índice</h2>
+            <div style="text-align: left; font-size: 1.2rem; line-height: 2.5;">
+                <p><strong>Capítulo 1:</strong> A Ciência da Persuasão Digital.............................5</p>
+                <p><strong>Capítulo 2:</strong> Economia Comportamental Aplicada......................9</p>
+                <p><strong>Capítulo 3:</strong> Psicologia da Decisão de Compra.........................13</p>
+                <p><strong>Capítulo 4:</strong> Neurociência do Marketing................................17</p>
+                <p><strong>Capítulo 5:</strong> Design Persuasivo e UX....................................21</p>
+                <p><strong>Capítulo 6:</strong> Framework de Conversão...................................25</p>
+                <p><strong>Conclusão:</strong> Implementação Prática...................................29</p>
+            </div>
+            <div class="page-number">2</div>
         </div>
-        
-        <div class="perguntas-item" id="page-5">
-            <h1>Parabéns!</h1>
-            <p>Você chegou ao final do nosso ebook. Esperamos que tenha aprendido muito. Um grande abraço!</p>
-        </div>
-        
-    </section>
 
-</body>
-</html>
+        <div class="page content-page">
+            <h2>Por Que Este Ebook Existe?</h2>
+            <p>Em 2024, as vendas online movimentaram mais de <strong>$6 trilhões globalmente</strong>. Mas aqui está o problema: <strong>apenas 2-3% dos visitantes de e-commerce realmente compram</strong>.</p>
+            
+            <p>Durante anos, estudei as pesquisas das maiores universidades do mundo para entender <em>por que</em> algumas pessoas compram e outras não. Este ebook é o resultado dessa jornada.</p>
+            
+            <div class="highlight-box">
+                <p style="font-size: 1.3rem;">Este não é mais um guia de vendas. É a aplicação prática da ciência comportamental às vendas digitais.</p>
+            </div>
+            
+            <p>Você vai descobrir como <strong>Harvard</strong> explica a tomada de decisão, o que <strong>Wharton</strong> ensina sobre psicologia do consumidor, e como <strong>Stanford</strong> aborda a persuasão digital.</p>
+            
+            <p>Prepare-se para uma mudança de paradigma na forma como você vende online.</p>
+            
+            <div class="page-number">3</div>
+        </div>
+
+        <div class="page content-page">
+            <h2>O Cenário Atual das Vendas Online</h2>
+            
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <span class="stat-number">97%</span>
+                    <p>dos visitantes abandonam sem comprar</p>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">7 seg</span>
+                    <p>para capturar atenção</p>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">70%</span>
+                    <p>abandonam carrinho</p>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">8x</span>
+                    <p>mais caro adquirir que reter</p>
+                </div>
+            </div>
+            
+            <p>O comportamento do consumidor online é fundamentalmente diferente do offline. <strong>A psicologia muda quando mediada por telas</strong>.</p>
+            
+            <div class="theory-source">
+                <div class="university">Stanford University - Consumer Behavior</div>
+                <p>"Contemporary approaches to marketing emphasize the importance of adopting a consumer focus, from determining consumers' wants and needs, understanding their motivation, to shaping their attitudes and ensuring their loyalty."</p>
+            </div>
+            
+            <div class="page-number">4</div>
+        </div>
+
+        <div class="page chapter-header">
+            <div class="chapter-number">01</div>
+            <h1 class="chapter-title">A Ciência da<br>Persuasão Digital</h1>
+            <p class="chapter-subtitle">Como Harvard e MIT Explicam o Comportamento Online</p>
+        </div>
+
+        <div class="page content-page">
+            <h2>O Modelo de Cialdini Aplicado ao Digital</h2>
+            
+            <p>Robert Cialdini, professor da Stanford University, identificou 6 princípios universais de persuasão. No ambiente digital, eles ganham novas dimensões:</p>
+            
+            <h3>1. Reciprocidade Digital</h3>
+            <p>No online, a reciprocidade funciona através de <strong>conteúdo gratuito de valor</strong>. Ebooks, webinars, ferramentas - tudo que gera a sensação de "dívida psicológica".</p>
+            
+            <h3>2. Compromisso e Coerência</h3>
+            <p>Formulários de múltiplas etapas aumentam conversão porque criam <strong>micro-compromissos</strong>. Cada campo preenchido é um investimento psicológico.</p>
+            
+            <div class="theory-source">
+                <div class="university">Harvard Business School - Digital Marketing Strategy</div>
+                <p>A HBS ensina que "Navigate the rise of emerging technologies and their implications for business" requer entender como a psicologia humana interage com interfaces digitais.</p>
+            </div>
+            
+            <h3>3. Prova Social Algorítmica</h3>
+            <p>Reviews, números de vendas, "outras pessoas também compraram" - o cérebro procura atalhos de decisão baseados no comportamento coletivo.</p>
+            
+            <div class="page-number">6</div>
+        </div>
+
+        <div class="page content-page">
+            <h3>4. Autoridade Digital</h3>
+            <p>Online, autoridade é construída através de <strong>conteúdo consistente</strong>, certificações visíveis, press releases e associações com marcas conhecidas.</p>
+            
+            <h3>5. Afinidade/Simpatia</h3>
+            <p>Storytelling pessoal, about pages humanizadas, e conteúdo que mostre valores compartilhados criam conexão emocional à distância.</p>
+            
+            <h3>6. Escassez Programada</h3>
+            <p>Contadores regressivos, "últimas unidades", ofertas por tempo limitado - mas cuidado: <strong>escassez falsa quebra confiança</strong>.</p>
+            
+            <div class="quote-box">
+                "A persuasão digital não é sobre manipular, é sobre comunicar valor de forma que o cérebro humano processa naturalmente"
+            </div>
+            
+            <div class="framework-box">
+                <h4>Framework CIALDINI DIGITAL:</h4>
+                <ol class="step-list">
+                    <li><strong>Reciprocidade:</strong> Ofereça valor antes de pedir algo</li>
+                    <li><strong>Compromisso:</strong> Crie micro-interações que geram investimento</li>
+                    <li><strong>Prova Social:</strong> Mostre que outros já escolheram você</li>
+                    <li><strong>Autoridade:</strong> Demonstre expertise de forma sutil</li>
+                    <li><strong>Afinidade:</strong> Conecte-se emocionalmente</li>
+                    <li><strong>Escassez:</strong> Crie urgência real</li>
+                </ol>
+            </div>
+            
+            <div class="page-number">7</div>
+        </div>
+
+        <div class="page content-page">
+            <h2>A Revolução da Neurociência</h2>
+            
+            <p>MIT e Harvard estão na vanguarda do <strong>neuromarketing</strong> - o estudo de como o cérebro responde a estímulos de marketing.</p>
+            
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <span class="stat-number">95%</span>
+                    <p>das decisões são subconscientes</p>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">0.05s</span>
+                    <p>para formar primeira impressão</p>
+                </div>
+            </div>
+            
+            <p>O cérebro humano não mudou em milhares de anos, mas o ambiente de compra mudou completamente nos últimos 20. Entender essa tensão é a chave para vendas eficazes.</p>
+            
+            <div class="highlight-box">
+                <p>Próximo: Como Wharton explica por que escolhemos mal online</p>
+            </div>
+            
+            <div class="page-number">8</div>
+        </div>
+
+        <div class="page chapter-header green-chapter">
+            <div class="chapter-number">02</div>
+            <h1 class="chapter-title">Economia<br>Comportamental</h1>
+            <p class="chapter-subtitle">As Descobertas de Wharton sobre Decisões Irracionais</
