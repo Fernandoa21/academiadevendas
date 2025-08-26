@@ -772,6 +772,50 @@ body.dark-mode .phase-block {
         max-width: 100%; /* Garante que o subtítulo use todo o espaço */
     }
 }
+/* --- ESTILOS PARA O NOVO ÍNDICE INTERATIVO --- */
+.index-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.index-btn {
+    text-decoration: none;
+    color: var(--text-color);
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1.25rem 1.5rem;
+    border-radius: 15px;
+    font-size: 1rem;
+    font-weight: 500;
+    text-align: left;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+body.dark-mode .index-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 4px 30px rgba(0,0,0,0.2);
+}
+
+.index-btn:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 8px 30px var(--shadow-color);
+    background: rgba(255, 255, 255, 0.25);
+}
+
+body.dark-mode .index-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.index-btn strong {
+    font-weight: 800;
+    margin-right: 0.5rem;
+}
 </style>
 </head>
 <body>
@@ -796,18 +840,38 @@ body.dark-mode .phase-block {
 <div class="page content-page">
     <div class="content-page-wrapper">
         <h2>Índice</h2>
-                <div style="text-align: left; font-size: 1.1rem; line-height: 2.4;">
-                    <p><strong>Introdução:</strong> O Cenário das Vendas Online........................ 3</p>
-                    <p><strong>Parte 1: A Base - Psicologia (Wharton)</strong> 🧠........................ 5</p>
-                    <p><strong>Parte 2: O Argumento - Persuasão (Stanford)</strong> 🧲................. 11</p>
-                    <p><strong>Parte 3: A Experiência - Interface (MIT)</strong> 🖥️........................ 18</p>
-                    <p><strong>Parte 4: A Evolução - Otimização (Harvard)</strong> 📈.................... 24</p>
-                    <p><strong>Síntese:</strong> O Framework Definitivo em Ação...................... 30</p>
-                    <p><strong>Conclusão:</strong> Seu Plano de Implementação......................... 34</p>
-                </div>
-            </div>
-            <div class="page-number">2</div>
-        </div>
+<div class="index-grid">
+    <a href="#" class="index-btn" data-page="2">
+        <strong>Introdução:</strong>
+        <span style="opacity: 0.7; margin-left: 0.5rem;">O Cenário Inicial</span>
+    </a>
+    <a href="#" class="index-btn" data-page="4">
+        <strong>Parte 1:</strong>
+        <span style="opacity: 0.7; margin-left: 0.5rem;">Psicologia 🧠</span>
+    </a>
+    <a href="#" class="index-btn" data-page="10">
+        <strong>Parte 2:</strong>
+        <span style="opacity: 0.7; margin-left: 0.5rem;">Persuasão 🧲</span>
+    </a>
+    <a href="#" class="index-btn" data-page="17">
+        <strong>Parte 3:</strong>
+        <span style="opacity: 0.7; margin-left: 0.5rem;">Interface 🖥️</span>
+    </a>
+    <a href="#" class="index-btn" data-page="23">
+        <strong>Parte 4:</strong>
+        <span style="opacity: 0.7; margin-left: 0.5rem;">Otimização 📈</span>
+    </a>
+    <a href="#" class="index-btn" data-page="29">
+        <strong>Síntese:</strong>
+        <span style="opacity: 0.7; margin-left: 0.5rem;">O Framework em Ação</span>
+    </a>
+    <a href="#" class="index-btn" data-page="33">
+        <strong>Conclusão:</strong>
+        <span style="opacity: 0.7; margin-left: 0.5rem;">Próximos Passos</span>
+    </a>
+</div>
+    </div>
+</div>
 
         <div class="page content-page">
             <div class="content-page-wrapper">
@@ -1498,7 +1562,7 @@ body.dark-mode .phase-block {
         </button>
     </div>
 
-    <script>
+<script>
         document.addEventListener('DOMContentLoaded', () => {
             // --- Lógica do Dark Mode ---
             const themeToggle = document.getElementById('theme-toggle');
@@ -1517,7 +1581,6 @@ body.dark-mode .phase-block {
                 }
             };
 
-            // Verifica o tema salvo no carregamento da página
             const savedTheme = localStorage.getItem('theme') || 'light';
             applyTheme(savedTheme);
 
@@ -1550,8 +1613,10 @@ body.dark-mode .phase-block {
                    pageCounter.innerHTML = `<span id="currentPageNum">${currentPage + 1}</span> / ${totalPages}`;
                 }
 
-                prevBtn.disabled = currentPage === 0;
-                nextBtn.disabled = currentPage === (totalPages - 1);
+                if(prevBtn && nextBtn) {
+                    prevBtn.disabled = currentPage === 0;
+                    nextBtn.disabled = currentPage === (totalPages - 1);
+                }
                 
                 requestAnimationFrame(() => {
                     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
@@ -1583,7 +1648,20 @@ body.dark-mode .phase-block {
                     prevPage();
                 }
             });
+            
+            // --- Lógica para os botões do Índice ---
+            const indexButtons = document.querySelectorAll('.index-btn');
+            indexButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const pageToGo = parseInt(button.dataset.page, 10);
+                    if (!isNaN(pageToGo)) {
+                        showPage(pageToGo);
+                    }
+                });
+            });
 
+            // Inicia o ebook na primeira página
             showPage(0);
         });
     </script>
